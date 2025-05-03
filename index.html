@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mi Flipbook</title>
+  <script src="jquery.min.js"></script>
+  <script src="turn.min.js"></script>
+  <style>
+    body { background: #ccc; display: flex; justify-content: center; padding-top: 20px; }
+    #flipbook { width: 800px; height: 600px; }
+    #flipbook .page { background: white; }
+    .descarga { margin-top: 20px; text-align: center; }
+    a.button { background: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="flipbook">
+      <div class="page"><img src="pages/page1.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page2.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page3.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page4.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page5.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page6.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page7.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page8.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page9.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page10.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page11.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page12.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page13.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page14.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page15.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page16.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page17.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page18.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page19.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page20.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page21.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page22.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page23.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page24.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page25.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page26.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page27.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page28.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page29.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page30.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page31.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page32.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page33.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page34.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page35.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page36.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page37.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page38.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page39.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page40.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page41.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page42.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page43.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page44.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page45.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page46.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page47.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page48.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page49.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page50.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page51.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page52.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page53.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page54.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page55.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page56.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page57.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page58.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page59.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page60.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page61.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page62.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page63.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page64.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page65.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page66.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page67.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page68.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page69.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page70.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page71.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page72.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page73.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page74.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page75.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page76.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page77.jpg" width="100%"></div>
+      <div class="page"><img src="pages/page78.jpg" width="100%"></div>
+
+    </div>
+    <div class="descarga">
+      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
+   class="button"
+   onclick="registrarDescarga()">Descargar PDF</a>
+    </div>
+  </div>
+
+  <script>
+    $('#flipbook').turn({ width: 800, height: 600, autoCenter: true });
+
+    function registrarDescarga() {
+      gtag('event', 'descarga_pdf', {
+        'event_category': 'Flipbook',
+        'event_label': 'libro.pdf'
+      });
+    }
+  </script>
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1010101515"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', 'G-1010101515');
+  </script>
+</body>
+</html>
