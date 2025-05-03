@@ -14,21 +14,20 @@
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      margin: 0;
     }
-    #flipbook-container {
-      overflow: hidden;
-      border: 2px solid #888;
-      touch-action: none; /* Evita gestos en móviles que interfieran */
-    }
+
     #flipbook {
       width: 874px;
       height: 1240px;
     }
+
     #flipbook .page {
       background: white;
       width: 437px;
       height: 1240px;
     }
+
     #flipbook .page img {
       width: 100%;
       height: 100%;
@@ -46,7 +45,6 @@
       color: white;
       padding: 10px 20px;
       text-decoration: none;
-      border: none;
       border-radius: 8px;
       margin: 5px;
       cursor: pointer;
@@ -55,12 +53,17 @@
     a.button:hover {
       background: #555;
     }
+
+    #panzoom-wrap {
+      overflow: hidden;
+      touch-action: none;
+    }
   </style>
 </head>
 <body>
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 
-  <div id="flipbook-container">
+  <div id="panzoom-wrap">
     <div id="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
       <div class="page"><img src="pages/page2.jpg" width="100%"></div>
@@ -166,22 +169,23 @@
         }
       });
 
-      const container = document.querySelector('#flipbook-container');
-      panzoomInstance = Panzoom(container, {
-        maxScale: 4,
+      const flipbookElement = document.querySelector('#flipbook');
+      const panzoomWrap = document.querySelector('#panzoom-wrap');
+
+      panzoomInstance = Panzoom(flipbookElement, {
+        maxScale: 3,
         contain: 'outside',
-        startScale: 1,
-        startX: 0,
-        startY: 0
+        startScale: 1
       });
 
-      // Zoom con clic
-      container.addEventListener('click', function (e) {
-        const rect = container.getBoundingClientRect();
-        const x = e.clientX - rect.left;
+      panzoomWrap.addEventListener('wheel', panzoomInstance.zoomWithWheel);
 
-        // Detectar esquinas (~50px desde bordes para evitar interferir con Turn.js)
+      panzoomWrap.addEventListener('click', function (e) {
+        const rect = panzoomWrap.getBoundingClientRect();
+        const x = e.clientX - rect.left;
         const borde = 50;
+
+        // Ignorar clic en esquinas
         if (x < borde || x > rect.width - borde) return;
 
         if (!zoomActivo) {
@@ -192,8 +196,6 @@
           zoomActivo = false;
         }
       });
-
-      container.addEventListener('wheel', panzoomInstance.zoomWithWheel);
     });
 
     function registrarDescarga() {
