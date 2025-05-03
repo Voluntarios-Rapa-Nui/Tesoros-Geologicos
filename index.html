@@ -1,15 +1,47 @@
 
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Mi Flipbook</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
   <style>
-    body { background: #ccc; display: flex; justify-content: center; padding-top: 20px; }
-    #flipbook { width: 800px; height: 600px; }
-    #flipbook .page { background: white; }
-    .descarga { margin-top: 20px; text-align: center; }
-    a.button { background: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; }
+    body {
+      background: #ccc;
+      display: flex;
+      justify-content: center;
+      padding-top: 20px;
+    }
+    #flipbook {
+      width: 800px;
+      height: 600px;
+    }
+    #flipbook .page {
+      background: white;
+    }
+    .descarga {
+      margin-top: 20px;
+      text-align: center;
+    }
+    a.button {
+      background: #333;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    /* NUEVO: Estilo necesario para permitir interacción */
+    #flipbook {
+      position: relative;
+      margin: auto;
+    }
+    #flipbook .page {
+      width: 400px;
+      height: 600px;
+    }
   </style>
 </head>
 <body>
@@ -101,27 +133,12 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="jquery.min.js"></script>
-  <script src="turn.min.js"></script>
-
   <script>
-    if (typeof $ === "undefined") {
-      alert("Error: jQuery no está cargando.");
-    } else if (typeof $.fn.turn === "undefined") {
-      alert("Error: Turn.js no está cargando.");
-    }
-
     $(document).ready(function () {
-      // Cargar automáticamente las 78 páginas
-      for (let i = 1; i <= 78; i++) {
-        $('#flipbook').append(`<div class="page"><img src="pages/page${i}.jpg" width="100%"></div>`);
-      }
-
       $('#flipbook').turn({
         width: 800,
         height: 600,
-        autoCenter: true
+        autoCenter: true,
       });
     });
 
