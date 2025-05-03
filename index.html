@@ -26,6 +26,7 @@
       height: 1240px;
     }
     #flipbook .page img {
+  touch-action: none;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -139,26 +140,15 @@
   </div>
 
    <script>
-    $(document).ready(function () {
-      $('#flipbook').turn({
-        width: 800,
-        height: 600,
-        autoCenter: true,
-        when: {
-          turned: function () {
-            const flipSound = document.getElementById('flip-sound');
-            if (flipSound) flipSound.play();
-          }
-        }
-      });
-    });
 
   let panzoomInstances = [];
 
   function activarZoom() {
+    // Evita inicializar dos veces
     if (panzoomInstances.length > 0) return;
 
-    const visiblePages = document.querySelectorAll('#flipbook .page img');
+    // Aplica zoom solo a las páginas visibles
+    const visiblePages = document.querySelectorAll('.page:visible img');
     visiblePages.forEach((img) => {
       const panzoom = Panzoom(img, {
         maxScale: 4,
@@ -176,6 +166,24 @@
     });
     panzoomInstances = [];
   }
+    $(document).ready(function () {
+    $('#flipbook').turn({
+      width: 800,
+      height: 600,
+      autoCenter: true,
+      when: {
+        turned: function () {
+          const flipSound = document.getElementById('flip-sound');
+          if (flipSound) flipSound.play();
+
+          // Restablece zoom al cambiar de página
+          resetearZoom();
+        }
+      }
+    });
+  });
+
+  
      
     function registrarDescarga() {
       gtag('event', 'descarga_pdf', {
