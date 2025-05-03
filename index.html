@@ -6,69 +6,46 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="jquery.min.js"></script>
   <script src="turn.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   <style>
     body {
       background: #ccc;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      margin: 0;
+      justify-content: center;
+      padding-top: 20px;
     }
-
     #flipbook {
-      width: 874px;
-      height: 1240px;
+    width: 874px;
+     height: 1240px;
+      position: relative;
+      margin: auto;
     }
-
     #flipbook .page {
       background: white;
       width: 437px;
       height: 1240px;
     }
-
     #flipbook .page img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      user-select: none;
-      pointer-events: none; /* evita conflicto de clics */
-    }
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  }
 
     .descarga {
       margin-top: 20px;
       text-align: center;
     }
-
     a.button {
       background: #333;
       color: white;
       padding: 10px 20px;
       text-decoration: none;
       border-radius: 8px;
-      margin: 5px;
-      cursor: pointer;
-    }
-
-    a.button:hover {
-      background: #555;
-    }
-
-    #panzoom-wrap {
-      overflow: hidden;
-      touch-action: none;
-    }
-
-    .zoom-activo {
-      pointer-events: auto; /* activa interacciones solo con zoom */
     }
   </style>
 </head>
 <body>
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
-
-  <div id="panzoom-wrap">
+  <div>
     <div id="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
       <div class="page"><img src="pages/page2.jpg" width="100%"></div>
@@ -149,22 +126,16 @@
       <div class="page"><img src="pages/page77.jpg" width="100%"></div>
       <div class="page"><img src="pages/page78.jpg" width="100%"></div>
     </div>
+    <div class="descarga">
+      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
+         class="button"
+         onclick="registrarDescarga()">Descargar PDF</a>
     </div>
-
-  <div class="descarga">
-    <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
-       class="button"
-       onclick="registrarDescarga()">Descargar PDF</a>
   </div>
 
-  <script>
-    let panzoomInstance;
-    let zoomActivo = false;
-
+   <script>
     $(document).ready(function () {
-      const flipbook = $('#flipbook');
-
-      flipbook.turn({
+      $('#flipbook').turn({
         width: 800,
         height: 600,
         autoCenter: true,
@@ -175,43 +146,10 @@
           }
         }
       });
-
-      const flipbookElement = document.querySelector('#flipbook');
-      const panzoomWrap = document.querySelector('#panzoom-wrap');
-
-      panzoomInstance = Panzoom(flipbookElement, {
-        maxScale: 3,
-        contain: 'outside',
-        startScale: 1,
-        disablePan: true,
-        disableZoom: true
-      });
-
-      panzoomWrap.addEventListener('click', function (e) {
-        const rect = panzoomWrap.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const borde = 50;
-
-        // Ignora clics en las esquinas (permiten pasar página)
-        if (x < borde || x > rect.width - borde) return;
-
-        if (!zoomActivo) {
-          // Activa zoom
-          panzoomInstance.setOptions({ disablePan: false, disableZoom: false });
-          panzoomInstance.zoomTo(e.clientX, e.clientY, 2, { animate: true });
-          flipbookElement.classList.add('zoom-activo');
-          zoomActivo = true;
-        } else {
-          // Desactiva zoom
-          panzoomInstance.reset({ animate: true });
-          panzoomInstance.setOptions({ disablePan: true, disableZoom: true });
-          flipbookElement.classList.remove('zoom-activo');
-          zoomActivo = false;
-        }
-      });
     });
 
-    function registrarDescarga() {
+     
+   function registrarDescarga() {
       gtag('event', 'descarga_pdf', {
         'event_category': 'Flipbook',
         'event_label': 'libro.pdf'
@@ -228,5 +166,4 @@
     gtag('config', 'G-4W27L8C7SS');
   </script>
 </body>
-</html>
 </html>
