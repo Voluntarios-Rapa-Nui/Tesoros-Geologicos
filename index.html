@@ -135,25 +135,26 @@
   </div>
 
   <script>
-    $(document).ready(function () {
-      $('#flipbook').turn({
-        width: 800,
-        height: 600,
-        autoCenter: true,
-        when: {
-        turned: function() {
-        document.getElementById('flip-sound').play();
-      });
+  $(document).ready(function () {
+    $('#flipbook').turn({
+      width: 800,
+      height: 600,
+      autoCenter: true,
+      when: {
+        turned: function () {
+          document.getElementById('flip-sound').play();
+        }
+      }
     });
+  });
 
-    
-    function registrarDescarga() {
-      gtag('event', 'descarga_pdf', {
-        'event_category': 'Flipbook',
-        'event_label': 'libro.pdf'
-      });
-    }
-  </script>
+  function registrarDescarga() {
+    gtag('event', 'descarga_pdf', {
+      'event_category': 'Flipbook',
+      'event_label': 'libro.pdf'
+    });
+  }
+</script>
 
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W27L8C7SS"></script>
