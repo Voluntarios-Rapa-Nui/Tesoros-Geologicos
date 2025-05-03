@@ -44,6 +44,7 @@
     }
   </style>
 </head>
+<audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 <body>
   <div>
     <div id="flipbook">
@@ -139,9 +140,13 @@
         width: 800,
         height: 600,
         autoCenter: true,
+        when: {
+        turned: function() {
+        document.getElementById('flip-sound').play();
       });
     });
 
+    
     function registrarDescarga() {
       gtag('event', 'descarga_pdf', {
         'event_category': 'Flipbook',
