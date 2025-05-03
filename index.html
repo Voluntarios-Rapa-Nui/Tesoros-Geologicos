@@ -6,6 +6,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="jquery.min.js"></script>
   <script src="turn.min.js"></script>
+  <script src="panzoom.min.js"></script>
   <style>
     body {
       background: #ccc;
@@ -126,6 +127,10 @@
       <div class="page"><img src="pages/page77.jpg" width="100%"></div>
       <div class="page"><img src="pages/page78.jpg" width="100%"></div>
     </div>
+    <div style="text-align:center; margin-top:10px;">
+    <button onclick="activarZoom()">Activar Zoom</button>
+    <button onclick="resetearZoom()">Restablecer Zoom</button>
+    </div>
     <div class="descarga">
       <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
          class="button"
@@ -148,6 +153,28 @@
       });
     });
 
+  let panzoomInstance;
+
+  function activarZoom() {
+    if (panzoomInstance) return;
+
+    panzoomInstance = Panzoom(document.querySelector('#flipbook'), {
+      maxScale: 4,
+      contain: 'outside'
+    });
+
+    // Habilita scroll con la rueda del mouse
+    document.querySelector('#flipbook').parentElement.addEventListener('wheel', panzoomInstance.zoomWithWheel);
+  }
+
+  function resetearZoom() {
+    if (panzoomInstance) {
+      panzoomInstance.reset();
+      panzoomInstance.destroy();
+      panzoomInstance = null;
+    }
+  }
+     
     function registrarDescarga() {
       gtag('event', 'descarga_pdf', {
         'event_category': 'Flipbook',
