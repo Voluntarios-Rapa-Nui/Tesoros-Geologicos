@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +16,13 @@
     #flipbook {
       width: 800px;
       height: 600px;
+      position: relative;
+      margin: auto;
     }
     #flipbook .page {
       background: white;
+      width: 400px;
+      height: 600px;
     }
     .descarga {
       margin-top: 20px;
@@ -32,20 +35,10 @@
       text-decoration: none;
       border-radius: 8px;
     }
-
-    /* NUEVO: Estilo necesario para permitir interacción */
-    #flipbook {
-      position: relative;
-      margin: auto;
-    }
-    #flipbook .page {
-      width: 400px;
-      height: 600px;
-    }
   </style>
 </head>
-<audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 <body>
+  <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
   <div>
     <div id="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
@@ -134,27 +127,28 @@
     </div>
   </div>
 
-  <script>
-  $(document).ready(function () {
-    $('#flipbook').turn({
-      width: 800,
-      height: 600,
-      autoCenter: true,
-      when: {
-        turned: function () {
-          document.getElementById('flip-sound').play();
+   <script>
+    $(document).ready(function () {
+      $('#flipbook').turn({
+        width: 800,
+        height: 600,
+        autoCenter: true,
+        when: {
+          turned: function () {
+            const flipSound = document.getElementById('flip-sound');
+            if (flipSound) flipSound.play();
+          }
         }
-      }
+      });
     });
-  });
 
-  function registrarDescarga() {
-    gtag('event', 'descarga_pdf', {
-      'event_category': 'Flipbook',
-      'event_label': 'libro.pdf'
-    });
-  }
-</script>
+    function registrarDescarga() {
+      gtag('event', 'descarga_pdf', {
+        'event_category': 'Flipbook',
+        'event_label': 'libro.pdf'
+      });
+    }
+  </script>
 
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W27L8C7SS"></script>
