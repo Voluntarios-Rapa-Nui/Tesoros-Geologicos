@@ -6,7 +6,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="jquery.min.js"></script>
   <script src="turn.min.js"></script>
-  <script src="panzoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@9.4.0/dist/panzoom.min.js"></script>
   <style>
     body {
       background: #ccc;
@@ -153,26 +153,28 @@
       });
     });
 
-  let panzoomInstance;
+  let panzoomInstances = [];
 
   function activarZoom() {
-    if (panzoomInstance) return;
+    if (panzoomInstances.length > 0) return;
 
-    panzoomInstance = Panzoom(document.querySelector('#flipbook'), {
-      maxScale: 4,
-      contain: 'outside'
+    const visiblePages = document.querySelectorAll('#flipbook .page img');
+    visiblePages.forEach((img) => {
+      const panzoom = Panzoom(img, {
+        maxScale: 4,
+        contain: 'outside'
+      });
+      img.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+      panzoomInstances.push(panzoom);
     });
-
-    // Habilita scroll con la rueda del mouse
-    document.querySelector('#flipbook').parentElement.addEventListener('wheel', panzoomInstance.zoomWithWheel);
   }
 
   function resetearZoom() {
-    if (panzoomInstance) {
-      panzoomInstance.reset();
-      panzoomInstance.destroy();
-      panzoomInstance = null;
-    }
+    panzoomInstances.forEach((panzoom) => {
+      panzoom.reset();
+      panzoom.destroy();
+    });
+    panzoomInstances = [];
   }
      
     function registrarDescarga() {
