@@ -33,6 +33,7 @@
       height: 100%;
       object-fit: cover;
       user-select: none;
+      pointer-events: none; /* evita conflicto de clics */
     }
 
     .descarga {
@@ -57,6 +58,10 @@
     #panzoom-wrap {
       overflow: hidden;
       touch-action: none;
+    }
+
+    .zoom-activo {
+      pointer-events: auto; /* activa interacciones solo con zoom */
     }
   </style>
 </head>
@@ -157,7 +162,9 @@
     let zoomActivo = false;
 
     $(document).ready(function () {
-      $('#flipbook').turn({
+      const flipbook = $('#flipbook');
+
+      flipbook.turn({
         width: 800,
         height: 600,
         autoCenter: true,
@@ -175,24 +182,30 @@
       panzoomInstance = Panzoom(flipbookElement, {
         maxScale: 3,
         contain: 'outside',
-        startScale: 1
+        startScale: 1,
+        disablePan: true,
+        disableZoom: true
       });
-
-      panzoomWrap.addEventListener('wheel', panzoomInstance.zoomWithWheel);
 
       panzoomWrap.addEventListener('click', function (e) {
         const rect = panzoomWrap.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const borde = 50;
 
-        // Ignorar clic en esquinas
+        // Ignora clics en las esquinas (permiten pasar página)
         if (x < borde || x > rect.width - borde) return;
 
         if (!zoomActivo) {
+          // Activa zoom
+          panzoomInstance.setOptions({ disablePan: false, disableZoom: false });
           panzoomInstance.zoomTo(e.clientX, e.clientY, 2, { animate: true });
+          flipbookElement.classList.add('zoom-activo');
           zoomActivo = true;
         } else {
+          // Desactiva zoom
           panzoomInstance.reset({ animate: true });
+          panzoomInstance.setOptions({ disablePan: true, disableZoom: true });
+          flipbookElement.classList.remove('zoom-activo');
           zoomActivo = false;
         }
       });
@@ -215,4 +228,5 @@
     gtag('config', 'G-4W27L8C7SS');
   </script>
 </body>
+</html>
 </html>
