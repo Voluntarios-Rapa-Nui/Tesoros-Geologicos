@@ -25,6 +25,9 @@
       overflow: visible !important;
       transform: scale(1) !important;
       transform-origin: left top !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .container {
@@ -33,6 +36,10 @@
       position: relative;
       margin: 0 auto;
     }
+
+    .scale-container {
+  transform-origin: top center;
+  }
 
     .flipbook {
       width: 1748px;
@@ -73,6 +80,7 @@
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 
   <div class="flipbook-viewport">
+    <div class="scale-container">
     <div class="container">
       <div class="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
@@ -156,6 +164,7 @@
      </div>
     </div>
     </div>
+    </div>
 
      <div class="descarga">
     <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
@@ -171,7 +180,25 @@
   <script>
     $(document).ready(function () {
       const flipbook = $('.flipbook');
+      function scaleToFit() {
+    const viewport = $('.flipbook-viewport');
+    const container = $('.scale-container');
 
+    const vw = viewport.width();
+    const vh = viewport.height();
+
+    const bw = 1750; // ancho real del libro
+    const bh = 1240; // alto real del libro
+
+    const scale = Math.min(vw / bw, vh / bh);
+
+    container.css({
+    transform: `scale(${scale})`
+  });
+}
+
+$(window).on('resize', scaleToFit);
+scaleToFit(); // inicial
       flipbook.turn({
         width: 1748,
         height: 1240,
