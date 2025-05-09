@@ -16,15 +16,18 @@
     }
 
     .flipbook-viewport {
-      width: 100%;
-      overflow: hidden;
-      position: relative;
+       position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
     }
 
     .flipbook {
       width: 874px;
       height: 1240px;
       margin: auto;
+      position: relative;
+      display: block;
     }
 
     .flipbook .page {
@@ -144,7 +147,10 @@
      </div>
     </div>
     </div>
-    
+
+  <button onclick="$('.flipbook-viewport').zoom('zoomIn')">Zoom In</button>
+  <button onclick="$('.flipbook-viewport').zoom('zoomOut')">Zoom Out</button>
+  
   <div class="descarga">
     <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
        class="button"
@@ -154,6 +160,14 @@
   <script>
     $(document).ready(function () {
       var flipbook = $('.flipbook');
+
+      $('.flipbook-viewport').on('zoom.tap', function () {
+        console.log('zoom.tap detectado');
+      });
+
+$('.flipbook-viewport').on('zoom.doubleTap', function () {
+  console.log('zoom.doubleTap detectado');
+});
 
       flipbook.turn({
         width: 874,
@@ -187,6 +201,22 @@
       });
     });
 
+    if ($.isTouch)
+  $('.flipbook-viewport').bind('zoom.doubleTap', zoomTo);
+else
+  $('.flipbook-viewport').bind('zoom.tap', zoomTo);
+
+// Esta función calcula si hacer zoom o no
+function zoomTo(event) {
+  setTimeout(function() {
+    if ($('.flipbook-viewport').zoom('value') == 1) {
+      $('.flipbook-viewport').zoom('zoomIn', event);
+    } else {
+      $('.flipbook-viewport').zoom('zoomOut');
+    }
+  }, 1);
+}
+    
     function registrarDescarga() {
       gtag('event', 'descarga_pdf', {
         'event_category': 'Flipbook',
