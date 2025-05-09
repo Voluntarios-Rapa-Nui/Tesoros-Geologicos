@@ -19,6 +19,7 @@
     }
 
     .flipbook-viewport {
+      transform: none !important;
       position: relative;
       width: 100%;
       height: 100%;
@@ -60,6 +61,11 @@
       border-radius: 8px;
     }
 
+    .zoom-viewport {
+  transform: scale(1) !important;
+  transform-origin: 0 0;
+  }
+    
     .zoom-in {
       cursor: move;
     }
@@ -198,6 +204,8 @@
           }
         }
       });
+     $('.flipbook-viewport').zoom('zoomOut');
+
 
       // Activar zoom con doble clic / doble tap
       if ($.isTouch)
