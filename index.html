@@ -12,27 +12,28 @@
       background: #ccc;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      overflow: hidden;
     }
 
     .flipbook-viewport {
       position: relative;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .flipbook {
-      width: 874px; /* 2 páginas de 437px */
+    .container {
+      width: 874px; /* 437 * 2 */
       height: 1240px;
       position: relative;
-      display: block;
+    }
+
+    .flipbook {
+      width: 874px;
+      height: 1240px;
     }
 
     .flipbook .page {
@@ -47,9 +48,13 @@
       object-fit: cover;
     }
 
+    .zoom-in {
+      cursor: move;
+    }
+
     .descarga {
-      margin-top: 20px;
       text-align: center;
+      margin-top: 10px;
     }
 
     a.button {
@@ -58,10 +63,6 @@
       padding: 10px 20px;
       text-decoration: none;
       border-radius: 8px;
-    }
-
-    .zoom-in {
-      cursor: move;
     }
   </style>
 </head>
@@ -166,13 +167,13 @@
 
   <script>
     $(document).ready(function () {
-      var flipbook = $('.flipbook');
+      const flipbook = $('.flipbook');
 
       flipbook.turn({
         width: 874,
         height: 1240,
         autoCenter: true,
-        display: 'double', // 🟢 Modo doble página
+        display: 'double',
         when: {
           turned: function () {
             const flipSound = document.getElementById('flip-sound');
@@ -200,15 +201,12 @@
         }
       });
 
-      // Forzar zoom inicial a 1 (por si quedó aplicado antes)
-      $('.flipbook-viewport').zoom('zoomOut');
+      // Asegura que el zoom esté desactivado al inicio
+      setTimeout(() => {
+        $('.flipbook-viewport').zoom('zoomOut');
+      }, 100);
 
-      // Activar zoom con doble clic o doble tap
-      if ($.isTouch)
-        $('.flipbook-viewport').bind('zoom.doubleTap', zoomTo);
-      else
-        $('.flipbook-viewport').bind('zoom.tap', zoomTo);
-
+      // Zoom con clic o doble tap
       function zoomTo(event) {
         setTimeout(function () {
           if ($('.flipbook-viewport').zoom('value') == 1) {
@@ -218,6 +216,11 @@
           }
         }, 1);
       }
+
+      if ($.isTouch)
+        $('.flipbook-viewport').bind('zoom.doubleTap', zoomTo);
+      else
+        $('.flipbook-viewport').bind('zoom.tap', zoomTo);
     });
 
     function registrarDescarga() {
