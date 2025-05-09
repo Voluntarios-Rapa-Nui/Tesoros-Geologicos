@@ -6,6 +6,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="jquery.min.js"></script>
   <script src="turn.min.js"></script>
+  <script src="zoom.min.js"></script> <!-- Agrega este script -->
   <style>
     body {
       background: #ccc;
@@ -13,27 +14,36 @@
       justify-content: center;
       padding-top: 20px;
     }
-    #flipbook {
-    width: 874px;
-     height: 1240px;
+
+    #flipbook-viewport {
+      width: 100%;
+      overflow: hidden;
       position: relative;
+    }
+
+    #flipbook {
+      width: 874px;
+      height: 1240px;
       margin: auto;
     }
+
     #flipbook .page {
       background: white;
       width: 437px;
       height: 1240px;
     }
+
     #flipbook .page img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  }
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
     .descarga {
       margin-top: 20px;
       text-align: center;
     }
+
     a.button {
       background: #333;
       color: white;
@@ -41,12 +51,17 @@
       text-decoration: none;
       border-radius: 8px;
     }
+
+    .zoom-in {
+      cursor: move;
+    }
   </style>
 </head>
 <body>
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
   <div>
-    <div id="flipbook">
+    <div id="flipbook-viewport">
+      <div id="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
       <div class="page"><img src="pages/page2.jpg" width="100%"></div>
       <div class="page"><img src="pages/page3.jpg" width="100%"></div>
@@ -125,6 +140,7 @@
       <div class="page"><img src="pages/page76.jpg" width="100%"></div>
       <div class="page"><img src="pages/page77.jpg" width="100%"></div>
       <div class="page"><img src="pages/page78.jpg" width="100%"></div>
+     </div>
     </div>
     <div class="descarga">
       <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
@@ -133,11 +149,13 @@
     </div>
   </div>
 
-   <script>
+  <script>
     $(document).ready(function () {
-      $('#flipbook').turn({
-        width: 800,
-        height: 600,
+      const flipbook = $('#flipbook');
+
+      flipbook.turn({
+        width: 874,
+        height: 1240,
         autoCenter: true,
         when: {
           turned: function () {
@@ -146,10 +164,28 @@
           }
         }
       });
+
+      $('#flipbook-viewport').zoom({
+        flipbook: flipbook,
+        max: 2.5,
+        when: {
+          swipeLeft: function () {
+            flipbook.turn('next');
+          },
+          swipeRight: function () {
+            flipbook.turn('previous');
+          },
+          zoomIn: function () {
+            flipbook.addClass('zoom-in');
+          },
+          zoomOut: function () {
+            flipbook.removeClass('zoom-in');
+          }
+        }
+      });
     });
 
-     
-   function registrarDescarga() {
+    function registrarDescarga() {
       gtag('event', 'descarga_pdf', {
         'event_category': 'Flipbook',
         'event_label': 'libro.pdf'
@@ -157,7 +193,7 @@
     }
   </script>
 
-  <!-- Google Analytics (GA4) -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W27L8C7SS"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
