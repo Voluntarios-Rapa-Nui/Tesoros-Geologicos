@@ -8,29 +8,30 @@
   <script src="turn.min.js"></script>
   <script src="zoom.min.js"></script>
   <style>
-    body {
-      background: #ccc;
+    html, body {
       margin: 0;
       padding: 0;
+      background: #ccc;
+      height: 100%;
+      width: 100%;
       overflow: hidden;
     }
-.zoom-viewport,
-    .flipbook-viewport {
-       transform: none !important;
-  transform-origin: 0 0 !important;
+
+    .flipbook-viewport,
+    .zoom-viewport {
       position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 100%;
+      height: 100%;
+      overflow: visible !important;
+      transform: scale(1) !important;
+      transform-origin: left top !important;
     }
 
     .container {
-      width: 874px; /* 437 * 2 */
+      width: 874px;
       height: 1240px;
       position: relative;
+      margin: 0 auto;
     }
 
     .flipbook {
@@ -39,9 +40,9 @@
     }
 
     .flipbook .page {
-      background: white;
       width: 437px;
       height: 1240px;
+      background: white;
     }
 
     .flipbook .page img {
@@ -156,7 +157,7 @@
     </div>
     </div>
 
-   <div class="descarga">
+     <div class="descarga">
     <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
        class="button"
        onclick="registrarDescarga()">Descargar PDF</a>
@@ -176,6 +177,8 @@
         height: 1240,
         autoCenter: true,
         display: 'double',
+        page: 1,
+        duration: 1000,
         when: {
           turned: function () {
             const flipSound = document.getElementById('flip-sound');
@@ -203,15 +206,12 @@
         }
       });
 
-      // Asegura que el zoom esté desactivado al inicio
-      setTimeout(() => {
-        $('.flipbook-viewport').css({
-  transform: 'none',
-  transformOrigin: '0 0'
-});;
-      }, 100);
+      // Cancelar zoom visual al iniciar
+      $('.flipbook-viewport').css({
+        transform: 'scale(1)',
+        transformOrigin: 'left top'
+      });
 
-      // Zoom con clic o doble tap
       function zoomTo(event) {
         setTimeout(function () {
           if ($('.flipbook-viewport').zoom('value') == 1) {
@@ -236,7 +236,6 @@
     }
   </script>
 
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W27L8C7SS"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
