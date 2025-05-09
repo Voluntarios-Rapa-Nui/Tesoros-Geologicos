@@ -14,8 +14,10 @@
       padding: 0;
       overflow: hidden;
     }
-
+.zoom-viewport,
     .flipbook-viewport {
+       transform: none !important;
+  transform-origin: 0 0 !important;
       position: relative;
       width: 100vw;
       height: 100vh;
@@ -203,7 +205,10 @@
 
       // Asegura que el zoom esté desactivado al inicio
       setTimeout(() => {
-        $('.flipbook-viewport').zoom('zoomOut');
+        $('.flipbook-viewport').css({
+  transform: 'none',
+  transformOrigin: '0 0'
+});;
       }, 100);
 
       // Zoom con clic o doble tap
