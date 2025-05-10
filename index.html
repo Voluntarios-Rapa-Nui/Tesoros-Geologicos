@@ -23,36 +23,35 @@
       width: 100%;
       height: 100%;
       overflow: visible !important;
-      transform: scale(1) !important;
-      transform-origin: left top !important;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
+    .scale-container {
+      transform-origin: top center;
+      transition: transform 0.2s ease;
+      pointer-events: none;
+    }
+
+    .scale-container .container {
+      pointer-events: auto;
+    }
+
     .container {
-      width: 1748px;
+      width: 1750px;
       height: 1240px;
       position: relative;
       margin: 0 auto;
     }
 
-    .scale-container {
-  transform-origin: top center;
-      pointer-events: none; /* bloquea eventos en el contenedor escalado */
-  }
-
-.scale-container .container {
-  pointer-events: auto; /* permite interacción normal dentro */
-}
-    
     .flipbook {
-      width: 1748px;
+      width: 1750px;
       height: 1240px;
     }
 
     .flipbook .page {
-      width: 874px;
+      width: 875px;
       height: 1240px;
       background: white;
     }
@@ -86,8 +85,8 @@
 
   <div class="flipbook-viewport">
     <div class="scale-container">
-    <div class="container">
-      <div class="flipbook">
+      <div class="container">
+        <div class="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
       <div class="page"><img src="pages/page2.jpg" width="100%"></div>
       <div class="page"><img src="pages/page3.jpg" width="100%"></div>
@@ -167,11 +166,11 @@
       <div class="page"><img src="pages/page77.jpg" width="100%"></div>
       <div class="page"><img src="pages/page78.jpg" width="100%"></div>
      </div>
+      </div>
     </div>
-    </div>
-    </div>
+  </div>
 
-     <div class="descarga">
+  <div class="descarga">
     <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
        class="button"
        onclick="registrarDescarga()">Descargar PDF</a>
@@ -185,27 +184,29 @@
   <script>
     $(document).ready(function () {
       const flipbook = $('.flipbook');
+
       function scaleToFit() {
-    const viewport = $('.flipbook-viewport');
-    const container = $('.scale-container');
+        const viewport = $('.flipbook-viewport');
+        const container = $('.scale-container');
 
-    const vw = viewport.width();
-    const vh = viewport.height();
+        const vw = viewport.width();
+        const vh = viewport.height();
 
-    const bw = 1750; // ancho real del libro
-    const bh = 1240; // alto real del libro
+        const bw = 1750; // ancho real del libro
+        const bh = 1240; // alto real del libro
 
-    const scale = Math.min(vw / bw, vh / bh);
+        const scale = Math.min(vw / bw, vh / bh);
 
-    container.css({
-    transform: `scale(${scale})`
-  });
-}
+        container.css({
+          transform: `scale(${scale})`
+        });
+      }
 
-$(window).on('resize', scaleToFit);
-scaleToFit(); // inicial
+      $(window).on('resize', scaleToFit);
+      scaleToFit();
+
       flipbook.turn({
-        width: 1748,
+        width: 1750,
         height: 1240,
         autoCenter: true,
         display: 'double',
@@ -236,12 +237,6 @@ scaleToFit(); // inicial
             flipbook.removeClass('zoom-in');
           }
         }
-      });
-
-      // Cancelar zoom visual al iniciar
-      $('.flipbook-viewport').css({
-        transform: 'scale(1)',
-        transformOrigin: 'left top'
       });
 
       function zoomTo(event) {
