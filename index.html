@@ -233,6 +233,21 @@
         }
       });
 
+      $('.flipbook').bind('start', function (event, pageObject, corner) {
+  if (!corner) {
+    const posX = event.originalEvent.pageX;
+    const bookOffset = $(this).offset().left;
+    const bookWidth = $(this).width();
+    const relX = posX - bookOffset;
+
+    if (relX < bookWidth * 0.25) {
+      $(this).turn('previous');
+    } else if (relX > bookWidth * 0.75) {
+      $(this).turn('next');
+    }
+  }
+});
+
       $('.flipbook-viewport').zoom({
         flipbook: flipbook,
         max: 2.5,
