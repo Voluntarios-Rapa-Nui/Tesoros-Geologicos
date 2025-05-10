@@ -39,8 +39,13 @@
 
     .scale-container {
   transform-origin: top center;
+      pointer-events: none; /* bloquea eventos en el contenedor escalado */
   }
 
+.scale-container .container {
+  pointer-events: auto; /* permite interacción normal dentro */
+}
+    
     .flipbook {
       width: 1748px;
       height: 1240px;
