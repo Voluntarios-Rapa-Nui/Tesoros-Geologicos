@@ -31,20 +31,14 @@
     .scale-container {
       transform-origin: top center;
       transition: transform 0.2s ease;
-      pointer-events: none;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .scale-container .container {
-      pointer-events: auto;
-    }
-
-    .container {
+    .scalable-content {
       width: 1750px;
       height: 1240px;
-      position: relative;
     }
 
     .flipbook {
@@ -110,7 +104,7 @@
 
   <div class="flipbook-viewport">
     <div class="scale-container" id="scale-container">
-      <div class="container">
+      <div class="scalable-content">
         <div class="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
       <div class="page"><img src="pages/page2.jpg" width="100%"></div>
@@ -207,16 +201,17 @@
 
     function scaleToFit() {
       const viewport = document.querySelector('.flipbook-viewport');
-      const container = document.getElementById('scale-container');
-      if (isZoomed) return; // no escalar si hay zoom activo
+      const scaleContainer = document.getElementById('scale-container');
+      if (isZoomed) return;
 
       const vw = viewport.clientWidth;
       const vh = viewport.clientHeight;
       const bw = 1750;
       const bh = 1240;
 
-      const scale = vw / bw;
-      container.style.transform = `scale(${scale})`;
+      // Escalar por altura
+      const scale = vh / bh;
+      scaleContainer.style.transform = `scale(${scale})`;
     }
 
     function zoomIn() {
