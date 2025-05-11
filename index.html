@@ -109,7 +109,7 @@
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 
   <div class="flipbook-viewport">
-    <div class="scale-container">
+    <div class="scale-container" id="scale-container">
       <div class="container">
         <div class="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
@@ -196,35 +196,49 @@
   </div>
 
   <div class="controls">
-      <button onclick="$('.flipbook-viewport').zoom('zoomIn')">🔍 Zoom In</button>
-      <button onclick="$('.flipbook-viewport').zoom('zoomOut')">🔎 Zoom Out</button>
+      <button onclick="zoomIn()">🔍 Zoom In</button>
+      <button onclick="zoomOut()">🔎 Zoom Out</button>
       <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">⬇ Descargar PDF</a>
     </div>
   </div>
 
   <script>
+    let isZoomed = false;
+
+    function scaleToFit() {
+      const viewport = document.querySelector('.flipbook-viewport');
+      const container = document.getElementById('scale-container');
+      if (isZoomed) return; // no escalar si hay zoom activo
+
+      const vw = viewport.clientWidth;
+      const vh = viewport.clientHeight;
+      const bw = 1750;
+      const bh = 1240;
+
+      const scale = Math.min(vw / bw, vh / bh);
+      container.style.transform = `scale(${scale})`;
+    }
+
+    function zoomIn() {
+      isZoomed = true;
+      $('.flipbook-viewport').zoom('zoomIn');
+    }
+
+    function zoomOut() {
+      isZoomed = false;
+      $('.flipbook-viewport').zoom('zoomOut');
+      scaleToFit();
+    }
+
+    function registrarDescarga() {
+      gtag('event', 'descarga_pdf', {
+        'event_category': 'Flipbook',
+        'event_label': 'libro.pdf'
+      });
+    }
+
     $(document).ready(function () {
       const flipbook = $('.flipbook');
-
-      function scaleToFit() {
-        const viewport = $('.flipbook-viewport');
-        const container = $('.scale-container');
-
-        const vw = viewport.width();
-        const vh = viewport.height();
-
-        const bw = 1750;
-        const bh = 1240;
-
-        const scale = Math.min(vw / bw, vh / bh);
-
-        container.css({
-          transform: `scale(${scale})`
-        });
-      }
-
-      $(window).on('resize', scaleToFit);
-      scaleToFit();
 
       flipbook.turn({
         width: 1750,
@@ -244,6 +258,7 @@
       $('.flipbook-viewport').zoom({
         flipbook: flipbook,
         max: 2.5,
+        eventNamespace: '.zoom-control',
         when: {
           swipeLeft: function () {
             flipbook.turn('next');
@@ -260,28 +275,13 @@
         }
       });
 
-      function zoomTo(event) {
-        setTimeout(function () {
-          if ($('.flipbook-viewport').zoom('value') == 1) {
-            $('.flipbook-viewport').zoom('zoomIn', event);
-          } else {
-            $('.flipbook-viewport').zoom('zoomOut');
-          }
-        }, 1);
-      }
+      // Desactiva zoom por clic o doble clic del cursor
+      $('.flipbook-viewport').off('zoom.tap');
+      $('.flipbook-viewport').off('zoom.doubleTap');
 
-      if ($.isTouch)
-        $('.flipbook-viewport').bind('zoom.doubleTap', zoomTo);
-      else
-        $('.flipbook-viewport').bind('zoom.tap', zoomTo);
+      window.addEventListener('resize', scaleToFit);
+      scaleToFit();
     });
-
-    function registrarDescarga() {
-      gtag('event', 'descarga_pdf', {
-        'event_category': 'Flipbook',
-        'event_label': 'libro.pdf'
-      });
-    }
   </script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W27L8C7SS"></script>
@@ -293,3 +293,4 @@
   </script>
 </body>
 </html>
+
