@@ -12,80 +12,75 @@
       margin: 0;
       padding: 0;
       background: #ccc;
-      height: 100%;
-      width: 100%;
-      font-family: sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    .flipbook-viewport {
+      position: relative;
+      width: 874px;
+      height: 1240px;
+      margin: auto;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .flipbook-viewport {
-      width: 874px;
-      height: 1240px;
-      overflow: hidden;
-      position: relative;
-    }
-
+    .scale-container,
+    .container,
     .flipbook {
       width: 874px;
       height: 1240px;
+      position: relative;
     }
 
     .flipbook .page {
       width: 437px;
       height: 1240px;
       background: white;
-      position: relative;
     }
 
     .flipbook .page img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      display: block;
     }
 
     .zoom-in {
       cursor: move;
     }
 
-   .controls {
-  position: absolute;
-  right: -200px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-}
-
-    .controls button,
-    .controls a.button {
-      all: unset;
-      display: inline-block;
-      background: linear-gradient(180deg, #3f51b5, #303f9f);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-align: center;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .controls {
+      position: absolute;
+      right: -200px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
     }
 
-    .controls button:hover,
-    .controls a.button:hover {
+    .button {
+      background-color: #2c3eaf;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .button:hover {
+      background-color: #3f50f6;
       transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
     }
   </style>
 </head>
@@ -93,7 +88,9 @@
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 
   <div class="flipbook-viewport">
-    <div class="flipbook">
+    <div class="scale-container">
+      <div class="container">
+        <div class="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
       <div class="page"><img src="pages/page2.jpg" width="100%"></div>
       <div class="page"><img src="pages/page3.jpg" width="100%"></div>
@@ -177,29 +174,14 @@
     </div>
   </div>
 
- <div class="controls">
-      <button onclick="zoomIn()">🔍 Zoom In</button>
-      <button onclick="zoomOut()">🔎 Zoom Out</button>
-      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">⬇ Descargar PDF</a>
+  <div class="controls">
+      <button class="button" onclick="$('.flipbook-viewport').zoom('zoomIn')">🔍 ZOOM IN</button>
+      <button class="button" onclick="$('.flipbook-viewport').zoom('zoomOut')">🔎 ZOOM OUT</button>
+      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">⬇ DESCARGAR PDF</a>
     </div>
   </div>
 
   <script>
-    function zoomIn() {
-      $('.flipbook-viewport').zoom('zoomIn');
-    }
-
-    function zoomOut() {
-      $('.flipbook-viewport').zoom('zoomOut');
-    }
-
-    function registrarDescarga() {
-      gtag('event', 'descarga_pdf', {
-        'event_category': 'Flipbook',
-        'event_label': 'libro.pdf'
-      });
-    }
-
     $(document).ready(function () {
       const flipbook = $('.flipbook');
 
@@ -221,7 +203,6 @@
       $('.flipbook-viewport').zoom({
         flipbook: flipbook,
         max: 2.5,
-        eventNamespace: '.zoom-control',
         when: {
           swipeLeft: function () {
             flipbook.turn('next');
@@ -238,9 +219,28 @@
         }
       });
 
-      $('.flipbook-viewport').off('zoom.tap');
-      $('.flipbook-viewport').off('zoom.doubleTap');
+      function zoomTo(event) {
+        setTimeout(function () {
+          if ($('.flipbook-viewport').zoom('value') == 1) {
+            $('.flipbook-viewport').zoom('zoomIn', event);
+          } else {
+            $('.flipbook-viewport').zoom('zoomOut');
+          }
+        }, 1);
+      }
+
+      if ($.isTouch)
+        $('.flipbook-viewport').bind('zoom.doubleTap', zoomTo);
+      else
+        $('.flipbook-viewport').bind('zoom.tap', zoomTo);
     });
+
+    function registrarDescarga() {
+      gtag('event', 'descarga_pdf', {
+        'event_category': 'Flipbook',
+        'event_label': 'libro.pdf'
+      });
+    }
   </script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W27L8C7SS"></script>
@@ -252,6 +252,5 @@
   </script>
 </body>
 </html>
-
 
 
