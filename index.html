@@ -14,68 +14,34 @@
       background: #ccc;
       height: 100%;
       width: 100%;
-      overflow: hidden;
       font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .flipbook-viewport {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
+      width: 874px;
+      height: 1240px;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .scale-container {
-      transform-origin: top center;
-      transition: transform 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .scalable-content {
-      width: 1750px;
-      height: 1000px;
+      position: relative;
     }
 
     .flipbook {
-      width: 1750px;
-      height: 1000px;
+      width: 874px;
+      height: 1240px;
     }
 
     .flipbook .page {
-      width: 875px;
-      height: 1000px;
+      width: 437px;
+      height: 1240px;
       background: white;
       position: relative;
     }
 
-    .flipbook .page::before,
-    .flipbook .page::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      width: 80px;
-      height: 100%;
-      z-index: 10;
-    }
-
-    .flipbook .page::before {
-      left: 0;
-      cursor: w-resize;
-    }
-
-    .flipbook .page::after {
-      right: 0;
-      cursor: e-resize;
-    }
-
     .flipbook .page img {
       width: 100%;
-      height: auto;
+      height: 100%;
       object-fit: contain;
       display: block;
     }
@@ -86,7 +52,7 @@
 
     .controls {
       position: absolute;
-      right: 20px;
+      right: -200px;
       top: 50%;
       transform: translateY(-50%);
       display: flex;
@@ -125,9 +91,7 @@
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 
   <div class="flipbook-viewport">
-    <div class="scale-container" id="scale-container">
-      <div class="scalable-content">
-        <div class="flipbook">
+    <div class="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
       <div class="page"><img src="pages/page2.jpg" width="100%"></div>
       <div class="page"><img src="pages/page3.jpg" width="100%"></div>
@@ -211,7 +175,7 @@
     </div>
   </div>
 
-  <div class="controls">
+ <div class="controls">
       <button onclick="zoomIn()">🔍 Zoom In</button>
       <button onclick="zoomOut()">🔎 Zoom Out</button>
       <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">⬇ Descargar PDF</a>
@@ -219,31 +183,12 @@
   </div>
 
   <script>
-    let isZoomed = false;
-
-    function scaleToFit() {
-      const viewport = document.querySelector('.flipbook-viewport');
-      const scaleContainer = document.getElementById('scale-container');
-      if (isZoomed) return;
-
-      const vw = viewport.clientWidth;
-      const vh = viewport.clientHeight;
-      const bw = 1750;
-      const bh = 1000;
-
-      const scale = Math.min(vw / bw, vh / bh);
-      scaleContainer.style.transform = `scale(${scale})`;
-    }
-
     function zoomIn() {
-      isZoomed = true;
       $('.flipbook-viewport').zoom('zoomIn');
     }
 
     function zoomOut() {
-      isZoomed = false;
       $('.flipbook-viewport').zoom('zoomOut');
-      scaleToFit();
     }
 
     function registrarDescarga() {
@@ -257,8 +202,8 @@
       const flipbook = $('.flipbook');
 
       flipbook.turn({
-        width: 1750,
-        height: 1000,
+        width: 874,
+        height: 1240,
         autoCenter: true,
         display: 'double',
         page: 1,
@@ -293,9 +238,6 @@
 
       $('.flipbook-viewport').off('zoom.tap');
       $('.flipbook-viewport').off('zoom.doubleTap');
-
-      window.addEventListener('resize', scaleToFit);
-      scaleToFit();
     });
   </script>
 
@@ -308,5 +250,6 @@
   </script>
 </body>
 </html>
+
 
 
