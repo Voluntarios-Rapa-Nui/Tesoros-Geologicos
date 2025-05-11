@@ -38,24 +38,46 @@
 
     .scalable-content {
       width: 1750px;
-      height: 1240px;
+      height: 1000px;
     }
 
     .flipbook {
       width: 1750px;
-      height: 1240px;
+      height: 1000px;
     }
 
     .flipbook .page {
       width: 875px;
-      height: 1240px;
+      height: 1000px;
       background: white;
+      position: relative;
+    }
+
+    .flipbook .page::before,
+    .flipbook .page::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 80px;
+      height: 100%;
+      z-index: 10;
+    }
+
+    .flipbook .page::before {
+      left: 0;
+      cursor: w-resize;
+    }
+
+    .flipbook .page::after {
+      right: 0;
+      cursor: e-resize;
     }
 
     .flipbook .page img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      object-fit: contain;
+      display: block;
     }
 
     .zoom-in {
@@ -207,10 +229,9 @@
       const vw = viewport.clientWidth;
       const vh = viewport.clientHeight;
       const bw = 1750;
-      const bh = 1240;
+      const bh = 1000;
 
-      // Escalar por altura
-      const scale = vh / bh;
+      const scale = Math.min(vw / bw, vh / bh);
       scaleContainer.style.transform = `scale(${scale})`;
     }
 
@@ -237,7 +258,7 @@
 
       flipbook.turn({
         width: 1750,
-        height: 1240,
+        height: 1000,
         autoCenter: true,
         display: 'double',
         page: 1,
@@ -270,7 +291,6 @@
         }
       });
 
-      // Desactiva zoom por clic o doble clic del cursor
       $('.flipbook-viewport').off('zoom.tap');
       $('.flipbook-viewport').off('zoom.doubleTap');
 
@@ -288,4 +308,5 @@
   </script>
 </body>
 </html>
+
 
