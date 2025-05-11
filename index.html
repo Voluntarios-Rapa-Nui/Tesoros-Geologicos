@@ -210,8 +210,8 @@
       const container = document.getElementById('scale-container');
       if (isZoomed) return; // no escalar si hay zoom activo
 
-      const vw = viewport.clientWidth;
-      const vh = viewport.clientHeight;
+      const vw = (viewport.clientWidth-200);
+      const vh = (viewport.clientHeight-200);
       const bw = 1750;
       const bh = 1240;
 
