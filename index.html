@@ -196,20 +196,22 @@
     $(document).ready(function () {
       const flipbook = $('.flipbook');
 
-      flipbook.turn({
-        width: 1748,
-        height: 1240,
-        autoCenter: true,
-        display: 'double',
-        page: 1,
-        duration: 1000,
-        when: {
-          turned: function () {
-            const flipSound = document.getElementById('flip-sound');
-            if (flipSound) flipSound.play();
-          }
-        }
-      });
+      const isMobile = window.innerWidth <= 768;
+
+flipbook.turn({
+  width: 874,
+  height: 1240,
+  autoCenter: true,
+  display: isMobile ? 'single' : 'double',
+  page: 1,
+  duration: 1000,
+  when: {
+    turned: function () {
+      const flipSound = document.getElementById('flip-sound');
+      if (flipSound) flipSound.play();
+    }
+  }
+});
 
       $('.flipbook-viewport').zoom({
         flipbook: flipbook,
