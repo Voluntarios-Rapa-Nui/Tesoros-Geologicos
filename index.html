@@ -14,7 +14,6 @@
       background: #ccc;
       height: 100%;
       width: 100%;
-      overflow: hidden;
     }
 
     .flipbook-viewport,
@@ -28,20 +27,21 @@
     }
 
     .container {
-      width: 2920px;
-      height: 1036px;
+      width: 1748px;
+      height: 1240px;
       position: relative;
       margin: 0 auto;
     }
 
+
     .flipbook {
-      width: 2920px;
-      height: 1036px;
+      width: 1748px;
+      height: 1240px;
     }
 
     .flipbook .page {
-      width: 1460px;
-      height: 1036px;
+      width: 874px;
+      height: 1240px;
       background: white;
     }
 
@@ -171,10 +171,13 @@
   <script>
     $(document).ready(function () {
       const flipbook = $('.flipbook');
+      function scaleToFit() {
+  });
+}
 
-      flipbook.turn({
-        width: 2920px;
-        height: 1036px;
+flipbook.turn({
+        width: 1748,
+        height: 1240,
         autoCenter: true,
         display: 'double',
         page: 1,
