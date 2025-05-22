@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Rapa Nui: Tesoros Geológicos</title>
@@ -11,26 +11,33 @@
     html, body {
       margin: 0;
       padding: 0;
+      background: #ccc;
       height: 100%;
+      width: 100%;
       overflow: hidden;
-      background-color: #ccc;
     }
 
-    .flipbook-viewport {
-  display: flex;
-  justify-content: center;
-  align-items: start; /* importante: antes era 'center', ahora 'start' */
-  width: 100vw;
-  height: 100vh;
-  background: #ccc;
-  overflow: hidden;
-}
+    .flipbook-viewport,
+    .zoom-viewport {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: visible !important;
+      transform: scale(1) !important;
+      transform-origin: left top !important;
+    }
 
-.flipbook {
-  width: 1460px;
-  height: 1036px;
-  position: relative;
-}
+    .container {
+      width: 1460px;
+      height: 1036px;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .flipbook {
+      width: 1460px;
+      height: 1036px;
+    }
 
     .flipbook .page {
       width: 730px;
@@ -41,35 +48,24 @@
     .flipbook .page img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
     }
 
-    .controls {
-      position: absolute;
-      top: 50%;
-      right: 30px;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    .zoom-in {
+      cursor: move;
     }
 
-    .controls button, .controls a.button {
-      background: #2a3eb1;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0px 3px 8px rgba(0,0,0,0.2);
-      text-decoration: none;
+    .descarga {
       text-align: center;
-      font-weight: bold;
+      margin-top: 10px;
     }
 
-    .controls button:hover, .controls a.button:hover {
-      background: #1d2d7c;
+    a.button {
+      background: #333;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -77,7 +73,8 @@
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 
   <div class="flipbook-viewport">
-    <div class="flipbook">
+    <div class="container">
+      <div class="flipbook">
       <div class="page"><img src="pages/page1.jpg" width="100%"></div>
       <div class="page"><img src="pages/page2.jpg" width="100%"></div>
       <div class="page"><img src="pages/page3.jpg" width="100%"></div>
@@ -157,19 +154,22 @@
       <div class="page"><img src="pages/page77.jpg" width="100%"></div>
       <div class="page"><img src="pages/page78.jpg" width="100%"></div>
      </div>
-      </div>
     </div>
+    </div>
+
+     <div class="descarga">
+    <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
+       class="button"
+       onclick="registrarDescarga()">Descargar PDF</a>
   </div>
 
-  <div class="controls">
-      <button onclick="$('.flipbook-viewport').zoom('zoomIn')">🔍 ZOOM IN</button>
-      <button onclick="$('.flipbook-viewport').zoom('zoomOut')">🔍 ZOOM OUT</button>
-      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">⬇ DESCARGAR PDF</a>
-    </div>
+  <div style="text-align:center; margin-top:10px;">
+    <button onclick="$('.flipbook-viewport').zoom('zoomIn')">Zoom In</button>
+    <button onclick="$('.flipbook-viewport').zoom('zoomOut')">Zoom Out</button>
   </div>
 
   <script>
-    $(function () {
+    $(document).ready(function () {
       const flipbook = $('.flipbook');
 
       flipbook.turn({
@@ -177,7 +177,8 @@
         height: 1240,
         autoCenter: true,
         display: 'double',
-        duration: 800,
+        page: 1,
+        duration: 1000,
         when: {
           turned: function () {
             const flipSound = document.getElementById('flip-sound');
@@ -190,6 +191,12 @@
         flipbook: flipbook,
         max: 2.5,
         when: {
+          swipeLeft: function () {
+            flipbook.turn('next');
+          },
+          swipeRight: function () {
+            flipbook.turn('previous');
+          },
           zoomIn: function () {
             flipbook.addClass('zoom-in');
           },
@@ -199,13 +206,34 @@
         }
       });
 
-      function registrarDescarga() {
-        gtag('event', 'descarga_pdf', {
-          'event_category': 'Flipbook',
-          'event_label': 'libro.pdf'
-        });
+      // Cancelar zoom visual al iniciar
+      $('.flipbook-viewport').css({
+        transform: 'scale(1)',
+        transformOrigin: 'left top'
+      });
+
+      function zoomTo(event) {
+        setTimeout(function () {
+          if ($('.flipbook-viewport').zoom('value') == 1) {
+            $('.flipbook-viewport').zoom('zoomIn', event);
+          } else {
+            $('.flipbook-viewport').zoom('zoomOut');
+          }
+        }, 1);
       }
+
+      if ($.isTouch)
+        $('.flipbook-viewport').bind('zoom.doubleTap', zoomTo);
+      else
+        $('.flipbook-viewport').bind('zoom.tap', zoomTo);
     });
+
+    function registrarDescarga() {
+      gtag('event', 'descarga_pdf', {
+        'event_category': 'Flipbook',
+        'event_label': 'libro.pdf'
+      });
+    }
   </script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W27L8C7SS"></script>
@@ -217,4 +245,3 @@
   </script>
 </body>
 </html>
-
