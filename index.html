@@ -12,35 +12,34 @@
       margin: 0;
       padding: 0;
       background: #ccc;
-      height: 100%;
-      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
     }
 
-    .flipbook-viewport,
-    .zoom-viewport {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: visible !important;
-      transform: scale(1) !important;
-      transform-origin: left top !important;
+    .wrapper {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
 
-    .container {
-      width: 1748px;
+    .flipbook-viewport {
+      width: 874px;
       height: 1240px;
       position: relative;
-      margin: 0 auto;
+      background: #ccc;
     }
 
-
     .flipbook {
-      width: 1748px;
+      width: 874px;
       height: 1240px;
     }
 
     .flipbook .page {
-      width: 874px;
+      width: 437px;
       height: 1240px;
       background: white;
     }
@@ -55,126 +54,136 @@
       cursor: move;
     }
 
-    .descarga {
-      text-align: center;
-      margin-top: 10px;
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    a.button {
-      background: #333;
+    .controls button,
+    .controls a.button {
+      all: unset;
+      display: inline-block;
+      background: linear-gradient(180deg, #3f51b5, #303f9f);
       color: white;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .controls button:hover,
+    .controls a.button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
     }
   </style>
 </head>
 <body>
   <audio id="flip-sound" src="page-flip.mp3" preload="auto"></audio>
 
-  <div class="flipbook-viewport">
-    <div class="container">
+  <div class="wrapper">
+    <div class="flipbook-viewport">
       <div class="flipbook">
-      <div class="page"><img src="pages/page1.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page2.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page3.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page4.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page5.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page6.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page7.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page8.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page9.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page10.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page11.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page12.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page13.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page14.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page15.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page16.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page17.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page18.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page19.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page20.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page21.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page22.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page23.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page24.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page25.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page26.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page27.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page28.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page29.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page30.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page31.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page32.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page33.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page34.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page35.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page36.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page37.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page38.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page39.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page40.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page41.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page42.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page43.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page44.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page45.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page46.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page47.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page48.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page49.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page50.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page51.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page52.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page53.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page54.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page55.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page56.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page57.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page58.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page59.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page60.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page61.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page62.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page63.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page64.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page65.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page66.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page67.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page68.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page69.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page70.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page71.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page72.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page73.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page74.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page75.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page76.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page77.jpg" width="100%"></div>
-      <div class="page"><img src="pages/page78.jpg" width="100%"></div>
-     </div>
+        <div class="page"><img src="pages/page1.jpg" /></div>
+        <div class="page"><img src="pages/page2.jpg" /></div>
+        <div class="page"><img src="pages/page3.jpg" /></div>
+        <div class="page"><img src="pages/page4.jpg" /></div>
+        <div class="page"><img src="pages/page5.jpg" /></div>
+        <div class="page"><img src="pages/page6.jpg" /></div>
+        <div class="page"><img src="pages/page7.jpg" /></div>
+        <div class="page"><img src="pages/page8.jpg" /></div>
+        <div class="page"><img src="pages/page9.jpg" /></div>
+        <div class="page"><img src="pages/page10.jpg" /></div>
+        <div class="page"><img src="pages/page11.jpg" /></div>
+        <div class="page"><img src="pages/page12.jpg" /></div>
+        <div class="page"><img src="pages/page13.jpg" /></div>
+        <div class="page"><img src="pages/page14.jpg" /></div>
+        <div class="page"><img src="pages/page15.jpg" /></div>
+        <div class="page"><img src="pages/page16.jpg" /></div>
+        <div class="page"><img src="pages/page17.jpg" /></div>
+        <div class="page"><img src="pages/page18.jpg" /></div>
+        <div class="page"><img src="pages/page19.jpg" /></div>
+        <div class="page"><img src="pages/page20.jpg" /></div>
+        <div class="page"><img src="pages/page21.jpg" /></div>
+        <div class="page"><img src="pages/page22.jpg" /></div>
+        <div class="page"><img src="pages/page23.jpg" /></div>
+        <div class="page"><img src="pages/page24.jpg" /></div>
+        <div class="page"><img src="pages/page25.jpg" /></div>
+        <div class="page"><img src="pages/page26.jpg" /></div>
+        <div class="page"><img src="pages/page27.jpg" /></div>
+        <div class="page"><img src="pages/page28.jpg" /></div>
+        <div class="page"><img src="pages/page29.jpg" /></div>
+        <div class="page"><img src="pages/page30.jpg" /></div>
+        <div class="page"><img src="pages/page31.jpg" /></div>
+        <div class="page"><img src="pages/page32.jpg" /></div>
+        <div class="page"><img src="pages/page33.jpg" /></div>
+        <div class="page"><img src="pages/page34.jpg" /></div>
+        <div class="page"><img src="pages/page35.jpg" /></div>
+        <div class="page"><img src="pages/page36.jpg" /></div>
+        <div class="page"><img src="pages/page37.jpg" /></div>
+        <div class="page"><img src="pages/page38.jpg" /></div>
+        <div class="page"><img src="pages/page39.jpg" /></div>
+        <div class="page"><img src="pages/page40.jpg" /></div>
+        <div class="page"><img src="pages/page41.jpg" /></div>
+        <div class="page"><img src="pages/page42.jpg" /></div>
+        <div class="page"><img src="pages/page43.jpg" /></div>
+        <div class="page"><img src="pages/page44.jpg" /></div>
+        <div class="page"><img src="pages/page45.jpg" /></div>
+        <div class="page"><img src="pages/page46.jpg" /></div>
+        <div class="page"><img src="pages/page47.jpg" /></div>
+        <div class="page"><img src="pages/page48.jpg" /></div>
+        <div class="page"><img src="pages/page49.jpg" /></div>
+        <div class="page"><img src="pages/page50.jpg" /></div>
+        <div class="page"><img src="pages/page51.jpg" /></div>
+        <div class="page"><img src="pages/page52.jpg" /></div>
+        <div class="page"><img src="pages/page53.jpg" /></div>
+        <div class="page"><img src="pages/page54.jpg" /></div>
+        <div class="page"><img src="pages/page55.jpg" /></div>
+        <div class="page"><img src="pages/page56.jpg" /></div>
+        <div class="page"><img src="pages/page57.jpg" /></div>
+        <div class="page"><img src="pages/page58.jpg" /></div>
+        <div class="page"><img src="pages/page59.jpg" /></div>
+        <div class="page"><img src="pages/page60.jpg" /></div>
+        <div class="page"><img src="pages/page61.jpg" /></div>
+        <div class="page"><img src="pages/page62.jpg" /></div>
+        <div class="page"><img src="pages/page63.jpg" /></div>
+        <div class="page"><img src="pages/page64.jpg" /></div>
+        <div class="page"><img src="pages/page65.jpg" /></div>
+        <div class="page"><img src="pages/page66.jpg" /></div>
+        <div class="page"><img src="pages/page67.jpg" /></div>
+        <div class="page"><img src="pages/page68.jpg" /></div>
+        <div class="page"><img src="pages/page69.jpg" /></div>
+        <div class="page"><img src="pages/page70.jpg" /></div>
+        <div class="page"><img src="pages/page71.jpg" /></div>
+        <div class="page"><img src="pages/page72.jpg" /></div>
+        <div class="page"><img src="pages/page73.jpg" /></div>
+        <div class="page"><img src="pages/page74.jpg" /></div>
+        <div class="page"><img src="pages/page75.jpg" /></div>
+        <div class="page"><img src="pages/page76.jpg" /></div>
+        <div class="page"><img src="pages/page77.jpg" /></div>
+        <div class="page"><img src="pages/page78.jpg" /></div>
+      </div>
     </div>
+    <div class="controls">
+      <button onclick="$('.flipbook-viewport').zoom('zoomIn')">Zoom In</button>
+      <button onclick="$('.flipbook-viewport').zoom('zoomOut')">Zoom Out</button>
+      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">Descargar PDF</a>
     </div>
-
-     <div class="descarga">
-    <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU"
-       class="button"
-       onclick="registrarDescarga()">Descargar PDF</a>
-  </div>
-
-  <div style="text-align:center; margin-top:10px;">
-    <button onclick="$('.flipbook-viewport').zoom('zoomIn')">Zoom In</button>
-    <button onclick="$('.flipbook-viewport').zoom('zoomOut')">Zoom Out</button>
   </div>
 
   <script>
     $(document).ready(function () {
       const flipbook = $('.flipbook');
-      
 
-flipbook.turn({
-        width: 1748,
+      flipbook.turn({
+        width: 874,
         height: 1240,
         autoCenter: true,
         display: 'double',
@@ -205,12 +214,6 @@ flipbook.turn({
             flipbook.removeClass('zoom-in');
           }
         }
-      });
-
-      // Cancelar zoom visual al iniciar
-      $('.flipbook-viewport').css({
-        transform: 'scale(1)',
-        transformOrigin: 'left top'
       });
 
       function zoomTo(event) {
