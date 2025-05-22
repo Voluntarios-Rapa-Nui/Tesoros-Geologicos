@@ -24,6 +24,8 @@
       display: flex;
       align-items: center;
       gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .flipbook-viewport {
@@ -83,6 +85,13 @@
       transform: scale(1.05);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
     }
+
+    @media (max-width: 950px) {
+      .flipbook-viewport {
+        transform: scale(0.6);
+        transform-origin: top center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -91,84 +100,7 @@
   <div class="wrapper">
     <div class="flipbook-viewport">
       <div class="flipbook">
-        <div class="page"><img src="pages/page1.jpg" /></div>
-        <div class="page"><img src="pages/page2.jpg" /></div>
-        <div class="page"><img src="pages/page3.jpg" /></div>
-        <div class="page"><img src="pages/page4.jpg" /></div>
-        <div class="page"><img src="pages/page5.jpg" /></div>
-        <div class="page"><img src="pages/page6.jpg" /></div>
-        <div class="page"><img src="pages/page7.jpg" /></div>
-        <div class="page"><img src="pages/page8.jpg" /></div>
-        <div class="page"><img src="pages/page9.jpg" /></div>
-        <div class="page"><img src="pages/page10.jpg" /></div>
-        <div class="page"><img src="pages/page11.jpg" /></div>
-        <div class="page"><img src="pages/page12.jpg" /></div>
-        <div class="page"><img src="pages/page13.jpg" /></div>
-        <div class="page"><img src="pages/page14.jpg" /></div>
-        <div class="page"><img src="pages/page15.jpg" /></div>
-        <div class="page"><img src="pages/page16.jpg" /></div>
-        <div class="page"><img src="pages/page17.jpg" /></div>
-        <div class="page"><img src="pages/page18.jpg" /></div>
-        <div class="page"><img src="pages/page19.jpg" /></div>
-        <div class="page"><img src="pages/page20.jpg" /></div>
-        <div class="page"><img src="pages/page21.jpg" /></div>
-        <div class="page"><img src="pages/page22.jpg" /></div>
-        <div class="page"><img src="pages/page23.jpg" /></div>
-        <div class="page"><img src="pages/page24.jpg" /></div>
-        <div class="page"><img src="pages/page25.jpg" /></div>
-        <div class="page"><img src="pages/page26.jpg" /></div>
-        <div class="page"><img src="pages/page27.jpg" /></div>
-        <div class="page"><img src="pages/page28.jpg" /></div>
-        <div class="page"><img src="pages/page29.jpg" /></div>
-        <div class="page"><img src="pages/page30.jpg" /></div>
-        <div class="page"><img src="pages/page31.jpg" /></div>
-        <div class="page"><img src="pages/page32.jpg" /></div>
-        <div class="page"><img src="pages/page33.jpg" /></div>
-        <div class="page"><img src="pages/page34.jpg" /></div>
-        <div class="page"><img src="pages/page35.jpg" /></div>
-        <div class="page"><img src="pages/page36.jpg" /></div>
-        <div class="page"><img src="pages/page37.jpg" /></div>
-        <div class="page"><img src="pages/page38.jpg" /></div>
-        <div class="page"><img src="pages/page39.jpg" /></div>
-        <div class="page"><img src="pages/page40.jpg" /></div>
-        <div class="page"><img src="pages/page41.jpg" /></div>
-        <div class="page"><img src="pages/page42.jpg" /></div>
-        <div class="page"><img src="pages/page43.jpg" /></div>
-        <div class="page"><img src="pages/page44.jpg" /></div>
-        <div class="page"><img src="pages/page45.jpg" /></div>
-        <div class="page"><img src="pages/page46.jpg" /></div>
-        <div class="page"><img src="pages/page47.jpg" /></div>
-        <div class="page"><img src="pages/page48.jpg" /></div>
-        <div class="page"><img src="pages/page49.jpg" /></div>
-        <div class="page"><img src="pages/page50.jpg" /></div>
-        <div class="page"><img src="pages/page51.jpg" /></div>
-        <div class="page"><img src="pages/page52.jpg" /></div>
-        <div class="page"><img src="pages/page53.jpg" /></div>
-        <div class="page"><img src="pages/page54.jpg" /></div>
-        <div class="page"><img src="pages/page55.jpg" /></div>
-        <div class="page"><img src="pages/page56.jpg" /></div>
-        <div class="page"><img src="pages/page57.jpg" /></div>
-        <div class="page"><img src="pages/page58.jpg" /></div>
-        <div class="page"><img src="pages/page59.jpg" /></div>
-        <div class="page"><img src="pages/page60.jpg" /></div>
-        <div class="page"><img src="pages/page61.jpg" /></div>
-        <div class="page"><img src="pages/page62.jpg" /></div>
-        <div class="page"><img src="pages/page63.jpg" /></div>
-        <div class="page"><img src="pages/page64.jpg" /></div>
-        <div class="page"><img src="pages/page65.jpg" /></div>
-        <div class="page"><img src="pages/page66.jpg" /></div>
-        <div class="page"><img src="pages/page67.jpg" /></div>
-        <div class="page"><img src="pages/page68.jpg" /></div>
-        <div class="page"><img src="pages/page69.jpg" /></div>
-        <div class="page"><img src="pages/page70.jpg" /></div>
-        <div class="page"><img src="pages/page71.jpg" /></div>
-        <div class="page"><img src="pages/page72.jpg" /></div>
-        <div class="page"><img src="pages/page73.jpg" /></div>
-        <div class="page"><img src="pages/page74.jpg" /></div>
-        <div class="page"><img src="pages/page75.jpg" /></div>
-        <div class="page"><img src="pages/page76.jpg" /></div>
-        <div class="page"><img src="pages/page77.jpg" /></div>
-        <div class="page"><img src="pages/page78.jpg" /></div>
+        <!-- Pages here -->
       </div>
     </div>
     <div class="controls">
@@ -200,6 +132,7 @@
       $('.flipbook-viewport').zoom({
         flipbook: flipbook,
         max: 2.5,
+        flipbookBounds: true,
         when: {
           swipeLeft: function () {
             flipbook.turn('next');
@@ -216,20 +149,8 @@
         }
       });
 
-      function zoomTo(event) {
-        setTimeout(function () {
-          if ($('.flipbook-viewport').zoom('value') == 1) {
-            $('.flipbook-viewport').zoom('zoomIn', event);
-          } else {
-            $('.flipbook-viewport').zoom('zoomOut');
-          }
-        }, 1);
-      }
-
-      if ($.isTouch)
-        $('.flipbook-viewport').bind('zoom.doubleTap', zoomTo);
-      else
-        $('.flipbook-viewport').bind('zoom.tap', zoomTo);
+      // Deshabilitar doble click y tap para zoom automático
+      $('.flipbook-viewport').off('zoom.tap zoom.doubleTap');
     });
 
     function registrarDescarga() {
