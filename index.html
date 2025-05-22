@@ -85,13 +85,6 @@
       transform: scale(1.05);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
     }
-
-    @media (max-width: 950px) {
-      .flipbook-viewport {
-        transform: scale(0.6);
-        transform-origin: top center;
-      }
-    }
   </style>
 </head>
 <body>
@@ -178,14 +171,14 @@
         <div class="page"><img src="pages/page76.jpg" /></div>
         <div class="page"><img src="pages/page77.jpg" /></div>
         <div class="page"><img src="pages/page78.jpg" /></div>
-        <div class="page"><img src="pages/page70.jpg" /></div>
+        <div class="page"><img src="pages/page79.jpg" /></div>
         <div class="page"><img src="pages/page80.jpg" /></div>
         <div class="page"><img src="pages/page81.jpg" /></div>
         <div class="page"><img src="pages/page82.jpg" /></div>
         <div class="page"><img src="pages/page83.jpg" /></div>
       </div>
     </div>
-    <div class="controls">
+   <div class="controls">
       <button onclick="$('.flipbook-viewport').zoom('zoomIn')">Zoom In</button>
       <button onclick="$('.flipbook-viewport').zoom('zoomOut')">Zoom Out</button>
       <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">Descargar PDF</a>
@@ -195,28 +188,26 @@
   <script>
     $(document).ready(function () {
       const flipbook = $('.flipbook');
-
       const isMobile = window.innerWidth <= 768;
 
-flipbook.turn({
-  width: 1748,
-  height: 1240,
-  autoCenter: true,
-  display: isMobile ? 'single' : 'double',
-  page: 1,
-  duration: 1000,
-  when: {
-    turned: function () {
-      const flipSound = document.getElementById('flip-sound');
-      if (flipSound) flipSound.play();
-    }
-  }
-});
+      flipbook.turn({
+        width: 1748,
+        height: 1240,
+        autoCenter: true,
+        display: isMobile ? 'single' : 'double',
+        page: 1,
+        duration: 1000,
+        when: {
+          turned: function () {
+            const flipSound = document.getElementById('flip-sound');
+            if (flipSound) flipSound.play();
+          }
+        }
+      });
 
       $('.flipbook-viewport').zoom({
         flipbook: flipbook,
         max: 2.5,
-        flipbookBounds: true,
         when: {
           swipeLeft: function () {
             flipbook.turn('next');
@@ -233,8 +224,19 @@ flipbook.turn({
         }
       });
 
-      // Deshabilitar doble click y tap para zoom automático
-      $('.flipbook-viewport').off('zoom.tap zoom.doubleTap');
+      function zoomTo(event) {
+        setTimeout(function () {
+          if ($('.flipbook-viewport').zoom('value') == 1) {
+            $('.flipbook-viewport').zoom('zoomIn', event);
+          } else {
+            $('.flipbook-viewport').zoom('zoomOut');
+          }
+        }, 1);
+      }
+
+      // Desactiva doble tap / click zoom automático
+      $('.flipbook-viewport').off('zoom.doubleTap');
+      $('.flipbook-viewport').off('zoom.tap');
     });
 
     function registrarDescarga() {
