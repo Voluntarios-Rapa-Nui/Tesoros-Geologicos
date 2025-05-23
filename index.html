@@ -34,14 +34,14 @@
     }
 
     .flipbook-viewport {
-      width: 1748px;
+      width: 874px;
       height: 1240px;
       position: relative;
       background: #ccc;
     }
 
     .flipbook {
-      width: 1748px;
+      width: 874px;
       height: 1240px;
     }
 
@@ -196,10 +196,10 @@
       const isMobile = window.innerWidth <= 768;
 
       flipbook.turn({
-        width: 1748,
+        width: 874,
         height: 1240,
         autoCenter: true,
-        display: isMobile ? 'single' : 'double',
+        display:'single',
         page: 1,
         duration: 1000,
         when: {
