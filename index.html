@@ -21,9 +21,47 @@
     }
 
     body {
-  background: url('fondo.svg') no-repeat center center fixed;
-  background-size: cover; /* o 'contain' si prefieres que no se recorte */
-}
+      background: url('fondo.svg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* Desktop-specific background handling */
+    @media (min-width: 769px) {
+      body {
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      
+      /* Alternative approach: if you want to ensure the background fills wider screens */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('fondo.svg') no-repeat center center;
+        background-size: cover;
+        z-index: -1;
+      }
+    }
+
+    /* Mobile background optimization */
+    @media (max-width: 768px) {
+      body {
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: scroll; /* Better performance on mobile */
+      }
+      
+      /* Remove the ::before pseudo-element on mobile */
+      body::before {
+        display: none;
+      }
+    }
 
     .wrapper {
       display: flex;
@@ -34,21 +72,32 @@
     }
 
     .flipbook-viewport {
-      width: 1748px;
-      height: 1240px;
       position: relative;
-      background: #ccc;
+      background: transparent;
+      max-width: 90vw;
+      max-height: 90vh; /* Increased from 85vh to 90vh */
     }
 
     .flipbook {
-      width: 1748px;
-      height: 1240px;
+      background: transparent; /* Ensure flipbook container is transparent */
     }
 
     .flipbook .page {
-      width: 1748px;
-      height: 1240px;
-      background: white;
+      background: transparent; /* Make pages transparent by default */
+    }
+
+    /* Ensure Turn.js generated elements don't have gray backgrounds */
+    .flipbook .page-wrapper {
+      background: transparent !important;
+    }
+
+    .flipbook .hard {
+      background: transparent !important;
+    }
+
+    /* Remove any default Turn.js backgrounds */
+    .turn-page {
+      background: transparent !important;
     }
 
     .flipbook .page img {
@@ -89,6 +138,32 @@
     .controls a.button:hover {
       transform: scale(1.05);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Mobile specific adjustments */
+    @media (max-width: 768px) {
+      .wrapper {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .flipbook-viewport {
+        max-width: 95vw;
+        max-height: 80vh;
+      }
+      
+      .controls {
+        flex-direction: row;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .controls button,
+      .controls a.button {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -194,22 +269,132 @@
     $(document).ready(function () {
       const flipbook = $('.flipbook');
       const isMobile = window.innerWidth <= 768;
+      const totalPages = flipbook.children('.page').length;
 
+      // Calculate responsive dimensions based on viewport
+      function calculateDimensions() {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        // Use more conservative space allocation
+        const maxWidth = Math.min(viewportWidth * 0.9, 1200);
+        const maxHeight = Math.min(viewportHeight * 0.85, 900); // Increased from 800 to 900
+        
+        let flipbookWidth, flipbookHeight;
+        
+        if (isMobile) {
+          // Mobile: single page, use portrait orientation friendly ratio
+          const mobileRatio = 0.75; // width/height ratio for mobile (more portrait)
+          
+          if (maxWidth / mobileRatio <= maxHeight) {
+            flipbookWidth = maxWidth;
+            flipbookHeight = maxWidth / mobileRatio;
+          } else {
+            flipbookHeight = maxHeight;
+            flipbookWidth = maxHeight * mobileRatio;
+          }
+        } else {
+          // Desktop: double page spread, make container smaller but taller/wider
+          const desktopRatio = 2.0; // Increased from 1.6 - wider ratio for better fit
+          
+          if (maxWidth / desktopRatio <= maxHeight) {
+            flipbookWidth = maxWidth * 0.85; // Make width smaller (85% instead of 100%)
+            flipbookHeight = (maxWidth * 0.85) / desktopRatio;
+          } else {
+            flipbookHeight = maxHeight * 0.85; // Make height smaller (85% instead of 100%)
+            flipbookWidth = (maxHeight * 0.85) * desktopRatio;
+          }
+        }
+        
+        // Add different height adjustments for mobile vs desktop
+        if (isMobile) {
+          flipbookHeight = Math.floor(flipbookHeight * 1.20); // 20% for mobile (perfect)
+        } else {
+          flipbookHeight = Math.floor(flipbookHeight * 1.45); // Increased from 1.25 to 1.35 for more top/bottom space
+        }
+        
+        return {
+          width: Math.floor(flipbookWidth),
+          height: Math.floor(flipbookHeight)
+        };
+      }
+
+      // Function to check if current page should be displayed alone
+      function shouldDisplayAlone(page) {
+        return page === 1 || page === totalPages;
+      }
+
+      // Function to get the effective display mode for a specific page
+      function getDisplayMode(page) {
+        if (shouldDisplayAlone(page)) {
+          return 'single';
+        }
+        return isMobile ? 'single' : 'double';
+      }
+
+      // Get initial dimensions
+      const dimensions = calculateDimensions();
+      console.log('Calculated dimensions:', dimensions);
+
+      // Set viewport and flipbook dimensions
+      $('.flipbook-viewport').css({
+        width: dimensions.width,
+        height: dimensions.height
+      });
+
+      // Important: Let Turn.js handle page sizing automatically
+      flipbook.css({
+        width: dimensions.width,
+        height: dimensions.height
+      });
+
+      // Initialize Turn.js
       flipbook.turn({
-        width: 1748,
-        height: 1240,
+        width: dimensions.width,
+        height: dimensions.height,
         autoCenter: true,
         display: isMobile ? 'single' : 'double',
         page: 1,
         duration: 1000,
         when: {
-          turned: function () {
+          turning: function(event, page, view) {
+            console.log('Turning to page:', page, 'View:', view);
+            
+            const currentDisplay = getDisplayMode(page);
+            const flipbookDisplay = flipbook.turn('display');
+            
+            // Only change display mode if really necessary
+            if (currentDisplay !== flipbookDisplay) {
+              console.log('Changing display mode to:', currentDisplay);
+              
+              // For single pages (covers), temporarily adjust to single mode
+              if (currentDisplay === 'single' && !isMobile) {
+                const singleWidth = Math.floor(dimensions.width / 2);
+                flipbook.turn('display', 'single');
+                flipbook.turn('size', singleWidth, dimensions.height);
+                $('.flipbook-viewport').css({
+                  width: singleWidth,
+                  height: dimensions.height
+                });
+              } else if (currentDisplay === 'double' && !isMobile) {
+                flipbook.turn('display', 'double');
+                flipbook.turn('size', dimensions.width, dimensions.height);
+                $('.flipbook-viewport').css({
+                  width: dimensions.width,
+                  height: dimensions.height
+                });
+              }
+            }
+          },
+          turned: function(event, page, view) {
+            console.log('Turned to page:', page, 'View:', view);
             const flipSound = document.getElementById('flip-sound');
             if (flipSound) flipSound.play();
           }
         }
       });
 
+      // Initialize zoom functionality
       $('.flipbook-viewport').zoom({
         flipbook: flipbook,
         max: 2.5,
@@ -229,19 +414,28 @@
         }
       });
 
-      function zoomTo(event) {
-        setTimeout(function () {
-          if ($('.flipbook-viewport').zoom('value') == 1) {
-            $('.flipbook-viewport').zoom('zoomIn', event);
-          } else {
-            $('.flipbook-viewport').zoom('zoomOut');
-          }
-        }, 1);
-      }
-
-      // Desactiva doble tap / click zoom automático
+      // Disable automatic zoom on double tap/click
       $('.flipbook-viewport').off('zoom.doubleTap');
       $('.flipbook-viewport').off('zoom.tap');
+
+      // Handle window resize
+      $(window).resize(function() {
+        const newIsMobile = window.innerWidth <= 768;
+        if (newIsMobile !== isMobile) {
+          // Device type changed, reload page
+          location.reload();
+        } else {
+          // Same device type, just resize
+          const newDimensions = calculateDimensions();
+          console.log('Resizing to:', newDimensions);
+          
+          flipbook.turn('size', newDimensions.width, newDimensions.height);
+          $('.flipbook-viewport').css({
+            width: newDimensions.width,
+            height: newDimensions.height
+          });
+        }
+      });
     });
 
     function registrarDescarga() {
