@@ -174,6 +174,200 @@
         font-size: 14px;
       }
     }
+
+    /* Botón estilo .btn-34 */
+  .btn-34,
+    .btn-34 *,
+    .btn-34 :after,
+    .btn-34 :before,
+    .btn-34:after,
+    .btn-34:before {
+      border: 0 solid;
+      box-sizing: border-box;
+    }
+    .btn-34 {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-appearance: button;
+      background-color: #000;
+      background-image: none;
+      color: #fff;
+      cursor: pointer;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+        Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+      font-size: 100%;
+      font-weight: 900;
+      line-height: 1.5;
+      margin: 0;
+      -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+      padding: 0;
+      text-transform: uppercase;
+    }
+    .btn-34:disabled {
+      cursor: default;
+    }
+    .btn-34:-moz-focusring {
+      outline: auto;
+    }
+    .btn-34 svg {
+      display: block;
+      vertical-align: middle;
+    }
+    .btn-34 [hidden] {
+      display: none;
+    }
+    .btn-34 {
+      border-radius: 99rem;
+      border-width: 2px;
+      overflow: hidden;
+      padding: 0.8rem 3rem;
+      position: relative;
+    }
+    .btn-34:hover {
+      transform: scale(1.1);
+    }
+    .btn-34 span {
+      font-weight: 900;
+      mix-blend-mode: difference;
+    }
+    .btn-34:before {
+      aspect-ratio: 1;
+      background: #fff;
+      border-radius: 50%;
+      content: "";
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s;
+      width: 0;
+    }
+    .btn-34:hover:before {
+      width: 100%;
+    }
+
+    .btn-94,
+.btn-94 *,
+.btn-94 :after,
+.btn-94 :before,
+.btn-94:after,
+.btn-94:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+.btn-94 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  background-color: #000;
+  background-image: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  font-weight: 900;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  text-transform: uppercase;
+}
+.btn-94:disabled {
+  cursor: default;
+}
+.btn-94:-moz-focusring {
+  outline: auto;
+}
+.btn-94 svg {
+  vertical-align: middle;
+}
+.btn-94 [hidden] {
+  display: none;
+}
+.btn-94 {
+  background: hsla(0, 0%, 100%, 0.2);
+  background-clip: content-box;
+  border: 5px solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: block;
+  height: 100px;
+  -webkit-mask-image: none;
+  padding: 0;
+  position: relative;
+  transition: 0.2s;
+  width: 100px;
+}
+.btn-94 svg {
+  --size: 50px;
+  fill: #fff;
+  display: block;
+  height: var(--size);
+  left: calc(50% - var(--size) / 2);
+  position: absolute;
+  top: calc(50% - var(--size) / 2);
+  width: var(--size);
+}
+.btn-94:hover {
+  --size: 70px;
+  border: 10px solid transparent;
+}
+
+.zoom-button {
+  width: 48px;
+  height: 48px;
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.zoom-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.zoom-button svg {
+  width: 24px;
+  height: 24px;
+  fill: black;
+}
+
+.controls button.zoom-btn {
+      all: unset;
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .controls button.zoom-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .controls button.zoom-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .zoom-in {
+      touch-action: pan-x pan-y;
+      -ms-touch-action: pan-x pan-y;
+      cursor: grab;
+    }
+
+
+
   </style>
 </head>
 <body>
@@ -268,10 +462,17 @@
       </div>
     </div>
    <div class="controls">
-      <button onclick="$('.flipbook-viewport').zoom('zoomIn')">Zoom In</button>
-      <button onclick="$('.flipbook-viewport').zoom('zoomOut')">Zoom Out</button>
-      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">Descargar PDF</a>
-      <a href="https://volunteeringrapanui.org" class="button" >Sobre nosotros</a>
+      <button class="zoom-btn" onclick="$('.flipbook-viewport').zoom('zoomIn')">
+        <img src="zoom_in.svg" alt="Zoom In" />
+      </button>
+      <button class="zoom-btn" onclick="$('.flipbook-viewport').zoom('zoomOut')">
+        <img src="zoom_out.svg" alt="Zoom Out" />
+      </button>
+
+      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="btn-34" onclick="registrarDescarga()">
+        <span>Descargar PDF</span>
+      </a>
+      <a href="https://volunteeringrapanui.org" class="btn-34"><span>Sobre nosotros</span></a>
     </div>
   </div>
 
