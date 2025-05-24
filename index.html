@@ -366,7 +366,11 @@
       cursor: grab;
     }
 
-
+@media (max-width: 768px) {
+  .zoom-btn {
+    display: none !important;
+  }
+}
 
   </style>
 </head>
@@ -458,6 +462,7 @@
         <div class="page"><img src="pages/page80.jpg" /></div>
         <div class="page"><img src="pages/page81.jpg" /></div>
         <div class="page"><img src="pages/page82.jpg" /></div>
+        <div class="page"><img src="pages/page2.jpg" /></div>
         <div class="page"><img src="pages/page83.jpg" /></div>
       </div>
     </div>
@@ -482,6 +487,10 @@
       const isMobile = window.innerWidth <= 768;
       const totalPages = flipbook.children('.page').length;
 
+      if (window.innerWidth <= 768) {
+       document.querySelectorAll('.zoom-btn').forEach(btn => btn.remove());
+      }
+      
       // Calculate responsive dimensions based on viewport
       function calculateDimensions() {
         const viewportWidth = window.innerWidth;
