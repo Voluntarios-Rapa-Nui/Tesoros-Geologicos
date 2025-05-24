@@ -55,13 +55,20 @@
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
-        background-attachment: scroll; /* Better performance on mobile */
+        background-attachment: fixed;
       }
-      
-      /* Remove the ::before pseudo-element on mobile */
+
       body::before {
-        display: none;
-      }
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('fondo.svg') no-repeat center center;
+        background-size: cover;
+        z-index: -1;
+  }
     }
 
     .wrapper {
@@ -110,6 +117,7 @@
     .zoom-in {
       cursor: move;
     }
+
 
     .controls {
       display: flex;
@@ -299,7 +307,7 @@
           const desktopRatio = 2.0; // Increased from 1.6 - wider ratio for better fit
           
           if (maxWidth / desktopRatio <= maxHeight) {
-            flipbookWidth = maxWidth * 0.85; // Make width smaller (85% instead of 100%)
+            flipbookWidth = maxWidth * 0.9; // Make width smaller (85% instead of 100%)
             flipbookHeight = (maxWidth * 0.85) / desktopRatio;
           } else {
             flipbookHeight = maxHeight * 0.85; // Make height smaller (85% instead of 100%)
@@ -311,7 +319,7 @@
         if (isMobile) {
           flipbookHeight = Math.floor(flipbookHeight * 1.20); // 20% for mobile (perfect)
         } else {
-          flipbookHeight = Math.floor(flipbookHeight * 1.45); // Increased from 1.25 to 1.35 for more top/bottom space
+          flipbookHeight = Math.floor(flipbookHeight * 1.5); // Increased from 1.25 to 1.35 for more top/bottom space
         }
         
         return {
