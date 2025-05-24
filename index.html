@@ -271,7 +271,7 @@
       <button onclick="$('.flipbook-viewport').zoom('zoomIn')">Zoom In</button>
       <button onclick="$('.flipbook-viewport').zoom('zoomOut')">Zoom Out</button>
       <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="button" onclick="registrarDescarga()">Descargar PDF</a>
-     <a href="https://volunteeringrapanui.org" class="button" >Sobre nosotros</a>
+      <a href="https://volunteeringrapanui.org" class="button" >Sobre nosotros</a>
     </div>
   </div>
 
@@ -294,7 +294,7 @@
         
         if (isMobile) {
           // Mobile: single page, use portrait orientation friendly ratio
-          const mobileRatio = 0.75; // width/height ratio for mobile (more portrait)
+          const mobileRatio = 0.7; // width/height ratio for mobile (more portrait)
           
           if (maxWidth / mobileRatio <= maxHeight) {
             flipbookWidth = maxWidth;
@@ -318,7 +318,7 @@
         
         // Add different height adjustments for mobile vs desktop
         if (isMobile) {
-          flipbookHeight = Math.floor(flipbookHeight * 1.20); // 20% for mobile (perfect)
+          flipbookHeight = Math.floor(flipbookHeight * 1); // 20% for mobile (perfect)
         } else {
           flipbookHeight = Math.floor(flipbookHeight * 1.5); // Increased from 1.25 to 1.35 for more top/bottom space
         }
