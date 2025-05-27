@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rapa Nui: Tesoros Geológicos</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <script src="jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="turn.min.js"></script>
   <script src="zoom.min.js"></script>
   <style>
@@ -35,7 +35,6 @@
         background-attachment: fixed;
       }
       
-      /* Alternative approach: if you want to ensure the background fills wider screens */
       body::before {
         content: '';
         position: fixed;
@@ -68,7 +67,7 @@
         background: url('fondo.svg') no-repeat center center;
         background-size: cover;
         z-index: -1;
-  }
+      }
     }
 
     .wrapper {
@@ -77,24 +76,29 @@
       gap: 20px;
       flex-wrap: wrap;
       justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      box-sizing: border-box;
+      padding: 10px;
     }
 
     .flipbook-viewport {
       position: relative;
       background: transparent;
-      max-width: 90vw;
-      max-height: 90vh; /* Increased from 85vh to 90vh */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .flipbook {
-      background: transparent; /* Ensure flipbook container is transparent */
+      background: transparent;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     .flipbook .page {
-      background: transparent; /* Make pages transparent by default */
+      background: transparent;
     }
 
-    /* Ensure Turn.js generated elements don't have gray backgrounds */
     .flipbook .page-wrapper {
       background: transparent !important;
     }
@@ -103,7 +107,6 @@
       background: transparent !important;
     }
 
-    /* Remove any default Turn.js backgrounds */
     .turn-page {
       background: transparent !important;
     }
@@ -111,18 +114,21 @@
     .flipbook .page img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      display: block;
     }
 
     .zoom-in {
       cursor: move;
+      touch-action: pan-x pan-y;
+      -ms-touch-action: pan-x pan-y;
     }
-
 
     .controls {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      flex-shrink: 0;
     }
 
     .controls button,
@@ -149,16 +155,35 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
     }
 
+    .controls button.zoom-btn {
+      all: unset;
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .controls button.zoom-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .controls button.zoom-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
     /* Mobile specific adjustments */
     @media (max-width: 768px) {
       .wrapper {
         flex-direction: column;
         gap: 10px;
-      }
-      
-      .flipbook-viewport {
-        max-width: 95vw;
-        max-height: 80vh;
+        padding: 5px;
       }
       
       .controls {
@@ -173,10 +198,14 @@
         padding: 8px 16px;
         font-size: 14px;
       }
+
+      .zoom-btn {
+        display: none !important;
+      }
     }
 
     /* Botón estilo .btn-34 */
-  .btn-34,
+    .btn-34,
     .btn-34 *,
     .btn-34 :after,
     .btn-34 :before,
@@ -246,132 +275,21 @@
       width: 100%;
     }
 
-    .btn-94,
-.btn-94 *,
-.btn-94 :after,
-.btn-94 :before,
-.btn-94:after,
-.btn-94:before {
-  border: 0 solid;
-  box-sizing: border-box;
-}
-.btn-94 {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-appearance: button;
-  background-color: #000;
-  background-image: none;
-  color: #fff;
-  cursor: pointer;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
-    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  font-size: 100%;
-  font-weight: 900;
-  line-height: 1.5;
-  margin: 0;
-  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
-  text-transform: uppercase;
-}
-.btn-94:disabled {
-  cursor: default;
-}
-.btn-94:-moz-focusring {
-  outline: auto;
-}
-.btn-94 svg {
-  vertical-align: middle;
-}
-.btn-94 [hidden] {
-  display: none;
-}
-.btn-94 {
-  background: hsla(0, 0%, 100%, 0.2);
-  background-clip: content-box;
-  border: 5px solid;
-  border-radius: 50%;
-  box-sizing: border-box;
-  display: block;
-  height: 100px;
-  -webkit-mask-image: none;
-  padding: 0;
-  position: relative;
-  transition: 0.2s;
-  width: 100px;
-}
-.btn-94 svg {
-  --size: 50px;
-  fill: #fff;
-  display: block;
-  height: var(--size);
-  left: calc(50% - var(--size) / 2);
-  position: absolute;
-  top: calc(50% - var(--size) / 2);
-  width: var(--size);
-}
-.btn-94:hover {
-  --size: 70px;
-  border: 10px solid transparent;
-}
-
-.zoom-button {
-  width: 48px;
-  height: 48px;
-  border: 2px solid black;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.zoom-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.zoom-button svg {
-  width: 24px;
-  height: 24px;
-  fill: black;
-}
-
-.controls button.zoom-btn {
-      all: unset;
-      width: 48px;
-      height: 48px;
-      background: white;
-      border-radius: 50%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+    /* Tablet adjustments */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .wrapper {
+        gap: 15px;
+        padding: 8px;
+      }
     }
 
-    .controls button.zoom-btn:hover {
-      transform: scale(1.1);
+    /* Large screen adjustments */
+    @media (min-width: 1920px) {
+      .wrapper {
+        gap: 30px;
+        padding: 20px;
+      }
     }
-
-    .controls button.zoom-btn img {
-      width: 24px;
-      height: 24px;
-    }
-
-    .zoom-in {
-      touch-action: pan-x pan-y;
-      -ms-touch-action: pan-x pan-y;
-      cursor: grab;
-    }
-
-@media (max-width: 768px) {
-  .zoom-btn {
-    display: none !important;
-  }
-}
-
   </style>
 </head>
 <body>
@@ -467,17 +385,11 @@
       </div>
     </div>
    <div class="controls">
-      <button class="zoom-btn" onclick="$('.flipbook-viewport').zoom('zoomIn')">
-        <img src="zoom_in.svg" alt="Zoom In" />
-      </button>
-      <button class="zoom-btn" onclick="$('.flipbook-viewport').zoom('zoomOut')">
-        <img src="zoom_out.svg" alt="Zoom Out" />
-      </button>
-
-      <a href="https://drive.google.com/uc?export=download&id=1btlHqvvNQ-6f-e5qFCarNmi0yAjeUxpU" class="btn-34" onclick="registrarDescarga()">
+      
+      <a href="https://drive.google.com/uc?export=download&id=1XMPwPlSIySYXPvJ0GBZStdHKAU13JlvT" class="btn-34" onclick="registrarDescarga()">
         <span>Descargar PDF</span>
       </a>
-      <a href="https://volunteeringrapanui.org" class="btn-34"><span>Sobre nosotros</span></a>
+      <a href="https://volunteeringrapanui.org" class="btn-34" onclick="registrarVisita()"><span>Sobre nosotros</span></a>
     </div>
   </div>
 
@@ -488,50 +400,51 @@
       const totalPages = flipbook.children('.page').length;
 
       if (window.innerWidth <= 768) {
-       document.querySelectorAll('.zoom-btn').forEach(btn => btn.remove());
+        document.querySelectorAll('.zoom-btn').forEach(btn => btn.remove());
       }
       
-      // Calculate responsive dimensions based on viewport
+      // Función mejorada para calcular dimensiones
       function calculateDimensions() {
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
         
-        // Use more conservative space allocation
-        const maxWidth = Math.min(viewportWidth * 0.9, 1200);
-        const maxHeight = Math.min(viewportHeight * 0.85, 900); // Increased from 800 to 900
+        // Reservar espacio para controles
+        const controlsWidth = isMobile ? 0 : 120; // Espacio para controles laterales
+        const controlsHeight = isMobile ? 80 : 0; // Espacio para controles en mobile
+        
+        // Calcular espacio disponible
+        const availableWidth = viewportWidth - controlsWidth - 40; // 40px de padding total
+        const availableHeight = viewportHeight - controlsHeight - 40; // 40px de padding total
         
         let flipbookWidth, flipbookHeight;
         
         if (isMobile) {
-          // Mobile: single page, use portrait orientation friendly ratio
-          const mobileRatio = 0.7; // width/height ratio for mobile (more portrait)
+          // Mobile: página única, ratio más cuadrado
+          const mobileRatio = 0.75; // width/height
           
-          if (maxWidth / mobileRatio <= maxHeight) {
-            flipbookWidth = maxWidth;
-            flipbookHeight = maxWidth / mobileRatio;
+          if (availableWidth / mobileRatio <= availableHeight) {
+            flipbookWidth = availableWidth;
+            flipbookHeight = availableWidth / mobileRatio;
           } else {
-            flipbookHeight = maxHeight;
-            flipbookWidth = maxHeight * mobileRatio;
+            flipbookHeight = availableHeight;
+            flipbookWidth = availableHeight * mobileRatio;
           }
         } else {
-          // Desktop: double page spread, make container smaller but taller/wider
-          const desktopRatio = 2.0; // Increased from 1.6 - wider ratio for better fit
+          // Desktop: página doble, usar ratio de libro abierto
+          const desktopRatio = 1.4; // ratio más conservador para libro abierto
           
-          if (maxWidth / desktopRatio <= maxHeight) {
-            flipbookWidth = maxWidth * 0.9; // Make width smaller (85% instead of 100%)
-            flipbookHeight = (maxWidth * 0.85) / desktopRatio;
+          if (availableWidth / desktopRatio <= availableHeight) {
+            flipbookWidth = availableWidth;
+            flipbookHeight = availableWidth / desktopRatio;
           } else {
-            flipbookHeight = maxHeight * 0.85; // Make height smaller (85% instead of 100%)
-            flipbookWidth = (maxHeight * 0.85) * desktopRatio;
+            flipbookHeight = availableHeight;
+            flipbookWidth = availableHeight * desktopRatio;
           }
         }
         
-        // Add different height adjustments for mobile vs desktop
-        if (isMobile) {
-          flipbookHeight = Math.floor(flipbookHeight * 1); // 20% for mobile (perfect)
-        } else {
-          flipbookHeight = Math.floor(flipbookHeight * 1.5); // Increased from 1.25 to 1.35 for more top/bottom space
-        }
+        // Asegurar que las dimensiones no excedan los límites
+        flipbookWidth = Math.min(flipbookWidth, availableWidth);
+        flipbookHeight = Math.min(flipbookHeight, availableHeight);
         
         return {
           width: Math.floor(flipbookWidth),
@@ -562,7 +475,6 @@
         height: dimensions.height
       });
 
-      // Important: Let Turn.js handle page sizing automatically
       flipbook.css({
         width: dimensions.width,
         height: dimensions.height
@@ -609,69 +521,89 @@
           turned: function(event, page, view) {
             console.log('Turned to page:', page, 'View:', view);
             const flipSound = document.getElementById('flip-sound');
-            if (flipSound) flipSound.play();
+            if (flipSound) {
+              flipSound.play().catch(e => console.log('Audio play failed:', e));
+            }
           }
         }
       });
 
-      // Initialize zoom functionality
-      $('.flipbook-viewport').zoom({
-        flipbook: flipbook,
-        max: 2.5,
-        when: {
-          swipeLeft: function () {
-            flipbook.turn('next');
-          },
-          swipeRight: function () {
-            flipbook.turn('previous');
-          },
-          zoomIn: function () {
-            flipbook.addClass('zoom-in');
-          },
-          zoomOut: function () {
-            flipbook.removeClass('zoom-in');
+      // Initialize zoom functionality if not mobile
+      if (!isMobile) {
+        $('.flipbook-viewport').zoom({
+          flipbook: flipbook,
+          max: 2.5,
+          when: {
+            swipeLeft: function () {
+              flipbook.turn('next');
+            },
+            swipeRight: function () {
+              flipbook.turn('previous');
+            },
+            zoomIn: function () {
+              flipbook.addClass('zoom-in');
+            },
+            zoomOut: function () {
+              flipbook.removeClass('zoom-in');
+            }
           }
-        }
-      });
+        });
 
-      // Disable automatic zoom on double tap/click
-      $('.flipbook-viewport').off('zoom.doubleTap');
-      $('.flipbook-viewport').off('zoom.tap');
+        // Disable automatic zoom on double tap/click
+        $('.flipbook-viewport').off('zoom.doubleTap');
+        $('.flipbook-viewport').off('zoom.tap');
+      }
 
-      // Handle window resize
+      // Handle window resize with debouncing
+      let resizeTimeout;
       $(window).resize(function() {
-        const newIsMobile = window.innerWidth <= 768;
-        if (newIsMobile !== isMobile) {
-          // Device type changed, reload page
-          location.reload();
-        } else {
-          // Same device type, just resize
-          const newDimensions = calculateDimensions();
-          console.log('Resizing to:', newDimensions);
-          
-          flipbook.turn('size', newDimensions.width, newDimensions.height);
-          $('.flipbook-viewport').css({
-            width: newDimensions.width,
-            height: newDimensions.height
-          });
-        }
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          const newIsMobile = window.innerWidth <= 768;
+          if (newIsMobile !== isMobile) {
+            // Device type changed, reload page
+            location.reload();
+          } else {
+            // Same device type, just resize
+            const newDimensions = calculateDimensions();
+            console.log('Resizing to:', newDimensions);
+            
+            flipbook.turn('size', newDimensions.width, newDimensions.height);
+            $('.flipbook-viewport').css({
+              width: newDimensions.width,
+              height: newDimensions.height
+            });
+          }
+        }, 250); // Debounce resize events
       });
     });
 
     function registrarDescarga() {
-      gtag('event', 'descarga_pdf', {
-        'event_category': 'Flipbook',
-        'event_label': 'libro.pdf'
-      });
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'descarga_pdf', {
+          'event_category': 'Flipbook',
+          'event_label': 'libro.pdf'
+        });
+      }
     }
+
+    function registrarVisita() {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'click_sobre_nosotros', {
+          'event_category': 'Botón',
+          'event_label': 'Sobre Nosotros'
+        });
+      }
+    }
+    
   </script>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W27L8C7SS"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPZBWC8J0P"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'G-4W27L8C7SS');
+    gtag('config', 'G-QPZBWC8J0P');
   </script>
 </body>
 </html>
